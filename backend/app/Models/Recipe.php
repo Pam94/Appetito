@@ -33,4 +33,13 @@ class Recipe extends Model
 
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * This function returns the images associated
+     * to a Recipe
+     */
+    public function images(){
+
+        return $this->hasMany(Image::class);
+    }
 }
