@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('recipe_category', function (Blueprint $table) {
-            $table->id();
+            $table->id('recipeCategoryId');
             $table->foreignId('recipeId');
             $table->foreignId('categoryId');
             $table->unique(['recipeId', 'categoryId']);

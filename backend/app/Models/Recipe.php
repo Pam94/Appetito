@@ -59,4 +59,15 @@ class Recipe extends Model
 
         return $this->belongsToMany(Ingredient::class);
     }
+
+    /**
+     * This function returns the plannings associated
+     * to the recipe in a many-to-many relationship
+     */
+    public function plannings(){
+
+        return $this->belongsToMany(Planning::class);
+    }
+
+
 }

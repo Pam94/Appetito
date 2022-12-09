@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('planning_recipe', function (Blueprint $table) {
-            $table->id();
+            $table->id('planningRecipeId');
             $table->foreignId('planningId');
             $table->foreignId('recipeId');
             $table->enum('meal', ['Desayuno', 'Comida', 'Cena']);

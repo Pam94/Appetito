@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('plannings', function (Blueprint $table) {
-            $table->id();
-            $table->date(date);
+            $table->id('planningId');
+            $table->date('date');
             $table->foreignId('userId');
         });
     }

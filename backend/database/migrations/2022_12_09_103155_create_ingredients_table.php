@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('ingredients', function (Blueprint $table) {
-            $table->id();
+            $table->id('ingredientId');
             $table->string('name');
             $table->binary('icon')->nullable();
             $table->boolean('pantry');

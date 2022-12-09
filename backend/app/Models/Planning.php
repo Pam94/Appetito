@@ -26,4 +26,13 @@ class Planning extends Model
 
         return $this->belongsTo('userId');
     }
+
+    /**
+     * This function returns the recipes associated
+     * to a planning in a many-to-many relationship
+     */
+    public function recipes(){
+
+        return $this->belongsToMany(Recipe::class);
+    }
 }
