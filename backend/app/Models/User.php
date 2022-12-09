@@ -48,4 +48,23 @@ class User extends Authenticatable
 
         return $this->hasMany(Recipe::class);
     }
+
+    /**
+     * This function returns all the ingredients
+     * the User has been created
+     */
+    public function ingredients(){
+
+        return $this->hasMany(Ingredient::class);
+    }
+
+
+    /**
+     * This function returns all the plannings
+     * the User has been created
+     */
+    public function plannings(){
+
+        return $this->hasMany(Planning::class);
+    }
 }
