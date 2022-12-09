@@ -10,15 +10,12 @@ class Ingredient extends Model
     use HasApiTokens;
 
      /**
-     * The attributes that are mass assignable.
+     * The attributes that are not mass assignable.
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'icon',
-        'pantry',
-        'shoplist'
+    protected $guarded = [
+        'ingredientId'
     ];
 
     /**

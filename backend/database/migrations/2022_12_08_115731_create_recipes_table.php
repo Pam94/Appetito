@@ -22,7 +22,7 @@ return new class extends Migration
             $table->boolean('favorite');
             $table->string('url')->nullable();
             $table->string('video')->nullable();
-            $table->foreignId('userId');
+            $table->foreignId('userId')->constrained();
         });
     }
 

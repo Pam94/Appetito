@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id('imageId');
             $table->string('url')->nullable();
             $table->binary('image');
-            $table->foreignId('recipeId');
+            $table->foreignId('recipeId')->constrained();
         });
     }
 

@@ -10,18 +10,12 @@ class Recipe extends Model
     use HasApiTokens;
 
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are not mass assignable.
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'time',
-        'portions',
-        'instructions',
-        'favorite',
-        'url',
-        'video'
+    protected $guarded = [
+        'recipeId'
     ];
 
     /**
@@ -57,7 +51,7 @@ class Recipe extends Model
      */
     public function ingredients(){
 
-        return $this->belongsToMany(Ingredient::class);
+        return $this->belongsToMany(Ingredient::class)->withPivot('grams');
     }
 
     /**
@@ -66,7 +60,7 @@ class Recipe extends Model
      */
     public function plannings(){
 
-        return $this->belongsToMany(Planning::class);
+        return $this->belongsToMany(Planning::class)->withPivot('meal');
     }
 
 

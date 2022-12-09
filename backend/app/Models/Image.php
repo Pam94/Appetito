@@ -10,13 +10,12 @@ class Image extends Model
     use HasFactory, HasApiTokens;
 
     /**
-     * The attributes that   are mass assignable.
+     * The attributes that are not mass assignable.
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'url',
-        'image'
+    protected $guarded = [
+        'imageId'
     ];
 
     /**

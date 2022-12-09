@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('recipe_category', function (Blueprint $table) {
             $table->id('recipeCategoryId');
-            $table->foreignId('recipeId');
-            $table->foreignId('categoryId');
+            $table->foreignId('recipeId')->constrained();
+            $table->foreignId('categoryId')->constrained();
             $table->unique(['recipeId', 'categoryId']);
         });
     }

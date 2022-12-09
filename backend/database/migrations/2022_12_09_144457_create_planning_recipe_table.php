@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('planning_recipe', function (Blueprint $table) {
             $table->id('planningRecipeId');
-            $table->foreignId('planningId');
-            $table->foreignId('recipeId');
+            $table->foreignId('planningId')->constrained();
+            $table->foreignId('recipeId')->constrained();
             $table->enum('meal', ['Desayuno', 'Comida', 'Cena']);
             $table->unique(['planningId', 'recipeId', 'meal']);
         });

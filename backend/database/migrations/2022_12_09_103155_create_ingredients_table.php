@@ -19,8 +19,8 @@ return new class extends Migration
             $table->binary('icon')->nullable();
             $table->boolean('pantry');
             $table->boolean('shoplist');
-            $table->foreignId('userId');
-            $table->foreignId('ingredientCategoryId');
+            $table->foreignId('userId')->constrained();
+            $table->foreignId('ingredientCategoryId')->constrained();
         });
     }
 

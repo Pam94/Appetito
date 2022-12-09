@@ -10,12 +10,12 @@ class Planning extends Model
     use HasApiTokens;
 
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are not mass assignable.
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'date',
+    protected $guarded = [
+        'planningId'
     ];
 
     /**
@@ -33,6 +33,6 @@ class Planning extends Model
      */
     public function recipes(){
 
-        return $this->belongsToMany(Recipe::class);
+        return $this->belongsToMany(Recipe::class)->withPivot('meal');
     }
 }
