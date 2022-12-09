@@ -19,8 +19,12 @@ class IngredientCategory extends Model
         'icon',
     ];
 
-    public function ingredient(){
+    /**
+     * This function returns the ingredients associated
+     * with a category
+     */
+    public function ingredients(){
 
-        return $this->belongsTo(Ingredient::class);
+        return $this->hasMany(Ingredient::class);
     }
 }

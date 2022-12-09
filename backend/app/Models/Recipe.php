@@ -50,4 +50,13 @@ class Recipe extends Model
 
         return $this->belongsToMany(Category::class);
     }
+
+    /**
+     * This function returns the ingredients associated
+     * to the recipe in a many-to-many relationship
+     */
+    public function ingredients(){
+
+        return $this->belongsToMany(Ingredient::class);
+    }
 }

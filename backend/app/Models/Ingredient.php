@@ -30,8 +30,21 @@ class Ingredient extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function categories(){
+    /**
+     * This function returns the category associated with
+     * an ingredient
+     */
+    public function category(){
 
-        return $this->hasMany(IngredientCategory::class, 'ingredientCategoryId');
+        return $this->belongsTo(IngredientCategory::class, 'ingredientCategoryId');
+    }
+
+    /**
+     * This function returns the recipes associated
+     * to an ingredient in a many-to-many relationship
+     */
+    public function recipes(){
+
+        return $this->belongsToMany(Recipe::class);
     }
 }
