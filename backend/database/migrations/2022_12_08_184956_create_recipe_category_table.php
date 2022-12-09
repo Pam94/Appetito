@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
+        Schema::create('recipe_category', function (Blueprint $table) {
             $table->id();
-            $table->string('url')->nullable();
-            $table->binary('image');
             $table->foreignId('recipeId');
+            $table->foreignId('categoryId');
+            $table->unique(['recipeId', 'categoryId']);
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('recipe_category');
     }
 };

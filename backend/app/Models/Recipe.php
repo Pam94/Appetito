@@ -42,4 +42,13 @@ class Recipe extends Model
 
         return $this->hasMany(Image::class);
     }
+
+    /**
+     * This function returns the categories associated
+     * to the recipe in a many-to-many relationship
+     */
+    public function categories(){
+
+        return $this->belongsToMany(Category::class);
+    }
 }
