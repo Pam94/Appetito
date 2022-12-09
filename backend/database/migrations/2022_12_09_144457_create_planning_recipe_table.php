@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('recipe_ingredient', function (Blueprint $table) {
+        Schema::create('planning_recipe', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('planningId');
             $table->foreignId('recipeId');
-            $table->foreignId('ingredientId');
-            $table->integer('grams');
-            $table->unique(['recipeId', 'ingredientId']);
+            $table->enum('meal', ['Desayuno', 'Comida', 'Cena']);
+            $table->unique(['planningId', 'recipeId', 'meal']);
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recipe_ingredient');
+        Schema::dropIfExists('planning_recipe');
     }
 };
