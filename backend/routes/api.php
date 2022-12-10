@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\UserController as UserV1;
+use App\Http\Controllers\LoginController as Login;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});
+});*/
+
+Route::apiResource('v1/users', UserV1::class)->middleware('auth:sanctum');
+
+Route::post('login', [Login::class, 'login']);
