@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('recipe_ingredient', function (Blueprint $table) {
             $table->id('recipeIngredientId');
-            $table->foreignId('recipeId')->constrained();
-            $table->foreignId('ingredientId')->constrained();
+            $table->foreignId('recipeId');
+            $table->foreignId('ingredientId');
             $table->integer('grams');
             $table->unique(['recipeId', 'ingredientId']);
         });
