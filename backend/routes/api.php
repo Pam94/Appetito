@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController as Auth;
 
 use App\Http\Controllers\IngredientController as IngredientV1;
 use App\Http\Controllers\IngredientCategoryController as IngredientCategoryV1;
+use App\Http\Controllers\CategoryController as CategoryV1;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,13 @@ Route::middleware('auth:sanctum')->group(function () {
     // api/v1/ingredientCategories/{id} PUT
     // api/v1/ingredientCategories/{id} DELETE
     Route::apiResource('v1/ingredientCategories', IngredientCategoryV1::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+
+    // api/v1/categories GET
+    // api/v1/categories/{id} GET
+    // api/v1/categories POST
+    // api/v1/categories/{id} PUT
+    // api/v1/categories/{id} DELETE
+    Route::apiResource('v1/categories', CategoryV1::class)->only(['index', 'show', 'store', 'update', 'destroy']);
 });
 
 Route::post('register', [Auth::class, 'register']);
