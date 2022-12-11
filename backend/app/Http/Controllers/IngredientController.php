@@ -125,7 +125,7 @@ class IngredientController extends Controller
 
             return response()->json([
                 'message' => 'Ingredient deleted successfully'
-            ], 200);
+            ], 204);
         }
 
         return response()->json([

@@ -91,7 +91,7 @@ class IngredientCategoryController extends Controller
             }
 
             return response()->json([
-                'message' => 'Ingredient Updated Successfully',
+                'message' => 'Ingredient Category Updated Successfully',
                 'data' => $ingredientCategory
             ], 200);
         } catch (\Throwable $throwable) {

@@ -22,7 +22,6 @@ class Ingredient extends Model
      */
     public function user()
     {
-
         return $this->belongsTo(User::class);
     }
 
@@ -32,7 +31,6 @@ class Ingredient extends Model
      */
     public function category()
     {
-
         return $this->belongsTo(IngredientCategory::class);
     }
 
@@ -42,7 +40,6 @@ class Ingredient extends Model
      */
     public function recipes()
     {
-
         return $this->belongsToMany(Recipe::class);
     }
 }
