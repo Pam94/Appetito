@@ -17,10 +17,11 @@ return new class extends Migration
             $table->id('ingredientId');
             $table->string('name');
             $table->binary('icon')->nullable();
-            $table->boolean('pantry');
-            $table->boolean('shoplist');
+            $table->boolean('pantry')->default(false);
+            $table->boolean('shoplist')->default(false);
             $table->foreignId('user_id');
-            $table->foreignId('ingredientCategoryId');
+            //$table->foreignId('ingredientCategoryId');
+            $table->timestamps();
         });
     }
 

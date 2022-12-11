@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\IngredientResource;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class IngredientController extends Controller
 {
@@ -26,7 +27,44 @@ class IngredientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        try {
+            $validateNewIngredient = Validator::make(
+                $request->all(),
+                [
+                    'name' => 'required',
+                    'user_id' => 'required',
+                    //'ingredientCategoryId' => 'required'
+
+                ]
+            );
+
+            if ($validateNewIngredient->fails()) {
+
+                return response()->json([
+                    'message' => 'Invalid new Ingredient parameters',
+                    'errors' => $validateNewIngredient->errors()
+                ], 401);
+            }
+
+            $ingredient = Ingredient::create([
+                'name' => $request->name,
+                'icon' => $request->icon,
+                'pantry' => $request->pantry ? $request->pantry : false,
+                'shoplist' => $request->shoplist ? $request->shoplist : false,
+                'user_id' => $request->user_id,
+                //'ingredientCategoryId' => $request->ingredientCategoryId
+            ]);
+
+            return response()->json([
+                'message' => 'Ingredient Created Successfully'
+            ], 200);
+        } catch (\Throwable $throwable) {
+
+            return response()->json([
+                'message' => $throwable->getMessage()
+            ], 500);
+        }
     }
 
     /**
