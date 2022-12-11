@@ -91,7 +91,26 @@ class IngredientController extends Controller
      */
     public function update(Request $request, Ingredient $ingredient)
     {
-        //
+        try {
+
+            if (!$ingredient->update($request->all())) {
+
+                return response()->json([
+                    'message' => 'Ingredient not updated',
+                    'data' => $ingredient
+                ], 401);
+            }
+
+            return response()->json([
+                'message' => 'Ingredient Updated Successfully',
+                'data' => $ingredient
+            ], 200);
+        } catch (\Throwable $throwable) {
+
+            return response()->json([
+                'message' => $throwable->getMessage()
+            ], 204);
+        }
     }
 
     /**
@@ -102,6 +121,15 @@ class IngredientController extends Controller
      */
     public function destroy(Ingredient $ingredient)
     {
-        //
+        if ($ingredient->delete()) {
+
+            return response()->json([
+                'message' => 'Ingredient deleted successfully'
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'Ingredient not found'
+        ], 404);
     }
 }

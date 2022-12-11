@@ -80,7 +80,26 @@ class IngredientCategoryController extends Controller
      */
     public function update(Request $request, IngredientCategory $ingredientCategory)
     {
-        //
+        try {
+
+            if (!$ingredientCategory->update($request->all())) {
+
+                return response()->json([
+                    'message' => 'Ingredient Category not updated',
+                    'data' => $ingredientCategory
+                ], 401);
+            }
+
+            return response()->json([
+                'message' => 'Ingredient Updated Successfully',
+                'data' => $ingredientCategory
+            ], 200);
+        } catch (\Throwable $throwable) {
+
+            return response()->json([
+                'message' => $throwable->getMessage()
+            ], 204);
+        }
     }
 
     /**
@@ -91,6 +110,15 @@ class IngredientCategoryController extends Controller
      */
     public function destroy(IngredientCategory $ingredientCategory)
     {
-        //
+        if ($ingredientCategory->delete()) {
+
+            return response()->json([
+                'message' => 'Ingredient Category deleted successfully'
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'Ingredient Category not found'
+        ], 404);
     }
 }

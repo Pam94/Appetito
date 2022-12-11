@@ -24,12 +24,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    // api/v1/ingredients
+    // api/v1/ingredients GET
+    // api/v1/ingredients/{id} GET
+    // api/v1/ingredients POST
+    // api/v1/ingredients/{id} PUT
+    // api/v1/ingredients/{id} DELETE
     Route::apiResource('v1/ingredients', IngredientV1::class)
-        ->only(['index', 'store', 'show']);
+        ->only(['index', 'show', 'store', 'update', 'destroy']);
 
-    // api/v1/ingredientCategories
-    Route::apiResource('v1/ingredientCategories', IngredientCategoryV1::class)->only(['index', 'store', 'show']);
+    // api/v1/ingredientCategories GET
+    // api/v1/ingredientCategories/{id} GET
+    // api/v1/ingredientCategories POST
+    // api/v1/ingredientCategories/{id} PUT
+    // api/v1/ingredientCategories/{id} DELETE
+    Route::apiResource('v1/ingredientCategories', IngredientCategoryV1::class)->only(['index', 'show', 'store', 'update', 'destroy']);
 });
 
 Route::post('register', [Auth::class, 'register']);
