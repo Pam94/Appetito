@@ -7,20 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class Ingredient extends Model
 {
 
-     /**
+    /**
      * The attributes that are not mass assignable.
      *
      * @var array<int, string>
      */
     protected $guarded = [
-        'ingredientId'
+        'id'
     ];
 
     /**
      * This function returns the User wich Id is assigned
      * to the Ingredient. The user has created the ingredient
      */
-    public function user(){
+    public function user()
+    {
 
         return $this->belongsTo(User::class);
     }
@@ -29,7 +30,8 @@ class Ingredient extends Model
      * This function returns the category associated with
      * an ingredient
      */
-    public function category(){
+    public function category()
+    {
 
         return $this->belongsTo(IngredientCategory::class);
     }
@@ -38,7 +40,8 @@ class Ingredient extends Model
      * This function returns the recipes associated
      * to an ingredient in a many-to-many relationship
      */
-    public function recipes(){
+    public function recipes()
+    {
 
         return $this->belongsToMany(Recipe::class);
     }
