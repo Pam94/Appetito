@@ -6,6 +6,7 @@ use App\Http\Resources\IngredientResource;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class IngredientController extends Controller
 {
@@ -16,7 +17,9 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        return IngredientResource::collection(Ingredient::latest()->paginate());
+        $autenticatedUserId = Auth::guard('sanctum')->id();
+
+        return IngredientResource::collection(Ingredient::where('user_id', $autenticatedUserId)->paginate());
     }
 
     /**
@@ -29,12 +32,14 @@ class IngredientController extends Controller
     {
 
         try {
+
+            $autenticatedUserId = Auth::guard('sanctum')->id();
+
             $validateNewIngredient = Validator::make(
                 $request->all(),
                 [
                     'name' => 'required',
-                    'user_id' => 'required',
-                    //'ingredientCategoryId' => 'required'
+                    'ingredientCategoryId' => 'required'
 
                 ]
             );
@@ -47,13 +52,13 @@ class IngredientController extends Controller
                 ], 401);
             }
 
-            $ingredient = Ingredient::create([
+            Ingredient::create([
                 'name' => $request->name,
                 'icon' => $request->icon,
                 'pantry' => $request->pantry ? $request->pantry : false,
                 'shoplist' => $request->shoplist ? $request->shoplist : false,
-                'user_id' => $request->user_id,
-                //'ingredientCategoryId' => $request->ingredientCategoryId
+                'user_id' => $autenticatedUserId,
+                'ingredientCategoryId' => $request->ingredientCategoryId
             ]);
 
             return response()->json([
