@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('recipeId');
             $table->foreignId('categoryId');
             $table->unique(['recipeId', 'categoryId']);
+            $table->timestamps();
         });
     }
 

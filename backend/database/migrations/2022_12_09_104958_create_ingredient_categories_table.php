@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('ingredientCategoryId');
             $table->string('name');
             $table->binary('icon')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('categoryId');
             $table->string('name');
             $table->binary('icon')->nullable();
+            $table->timestamps();
         });
     }
 

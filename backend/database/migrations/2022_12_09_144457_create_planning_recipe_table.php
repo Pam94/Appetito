@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('recipeId');
             $table->enum('meal', ['Desayuno', 'Comida', 'Cena']);
             $table->unique(['planningId', 'recipeId', 'meal']);
+            $table->timestamps();
         });
     }
 

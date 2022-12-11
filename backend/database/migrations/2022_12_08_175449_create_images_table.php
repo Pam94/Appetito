@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('url')->nullable();
             $table->binary('image');
             $table->foreignId('recipeId');
+            $table->timestamps();
         });
     }
 

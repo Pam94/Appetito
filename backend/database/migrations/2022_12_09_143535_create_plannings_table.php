@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('planningId');
             $table->date('date');
             $table->foreignId('user_id');
+            $table->timestamps();
         });
     }
 
