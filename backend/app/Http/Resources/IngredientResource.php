@@ -21,7 +21,7 @@ class IngredientResource extends JsonResource
             'pantry' => $this->pantry,
             'shoplist' => $this->shoplist,
             'userId' => $this->user_id,
-            'ingredientCategoryId' => $this->ingredientCategoryId
+            'ingredientCategory_id' => $this->ingredientCategory_id
         ];
     }
 }

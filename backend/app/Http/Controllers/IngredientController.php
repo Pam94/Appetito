@@ -39,8 +39,7 @@ class IngredientController extends Controller
                 $request->all(),
                 [
                     'name' => 'required',
-                    'ingredientCategoryId' => 'required'
-
+                    'ingredientCategory_id' => 'required'
                 ]
             );
 
@@ -58,7 +57,7 @@ class IngredientController extends Controller
                 'pantry' => $request->pantry ? $request->pantry : false,
                 'shoplist' => $request->shoplist ? $request->shoplist : false,
                 'user_id' => $autenticatedUserId,
-                'ingredientCategoryId' => $request->ingredientCategoryId
+                'ingredientCategory_id' => $request->ingredientCategory_id
             ]);
 
             return response()->json([
