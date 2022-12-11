@@ -20,16 +20,18 @@ class Planning extends Model
      * This function returns the user responsible
      * of creating the planning
      */
-    public function user(){
+    public function user()
+    {
 
-        return $this->belongsTo('userId');
+        return $this->belongsTo('user_id');
     }
 
     /**
      * This function returns the recipes associated
      * to a planning in a many-to-many relationship
      */
-    public function recipes(){
+    public function recipes()
+    {
 
         return $this->belongsToMany(Recipe::class)->withPivot('meal');
     }

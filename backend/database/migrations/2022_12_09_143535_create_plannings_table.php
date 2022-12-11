@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('plannings', function (Blueprint $table) {
             $table->id('planningId');
             $table->date('date');
-            $table->foreignId('userId');
+            $table->foreignId('user_id');
         });
     }
 

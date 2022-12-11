@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $guarded = [
-        'userId'
+        'id'
     ];
 
     /**
@@ -28,12 +28,13 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-    
+
     /**
      * This function returns all the recipes
      * the User has been created
      */
-    public function recipes(){
+    public function recipes()
+    {
 
         return $this->hasMany(Recipe::class);
     }
@@ -42,7 +43,8 @@ class User extends Authenticatable
      * This function returns all the ingredients
      * the User has been created
      */
-    public function ingredients(){
+    public function ingredients()
+    {
 
         return $this->hasMany(Ingredient::class);
     }
@@ -52,7 +54,8 @@ class User extends Authenticatable
      * This function returns all the plannings
      * the User has been created
      */
-    public function plannings(){
+    public function plannings()
+    {
 
         return $this->hasMany(Planning::class);
     }

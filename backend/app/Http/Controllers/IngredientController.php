@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Http\Resources\IngredientResource;
+use App\Models\Ingredient;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class IngredientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(User::latest()->paginate());
+        return IngredientResource::collection(Ingredient::latest()->paginate());
     }
 
     /**
@@ -31,22 +32,22 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Ingredient $ingredient)
     {
-        return new UserResource($user);
+        return new IngredientResource($ingredient);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Ingredient $ingredient)
     {
         //
     }
@@ -54,18 +55,11 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Ingredient $ingredient)
     {
-        if ($user->delete()){
-            return response()->json([
-                'message' => 'Success'
-            ],204);
-        }
-        return response()->json([
-            'message' => 'Not found'
-        ],404);
+        //
     }
 }

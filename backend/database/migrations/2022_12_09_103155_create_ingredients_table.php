@@ -19,7 +19,7 @@ return new class extends Migration
             $table->binary('icon')->nullable();
             $table->boolean('pantry');
             $table->boolean('shoplist');
-            $table->foreignId('userId');
+            $table->foreignId('user_id');
             $table->foreignId('ingredientCategoryId');
         });
     }

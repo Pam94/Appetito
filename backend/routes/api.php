@@ -3,8 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\UserController as UserV1;
-use App\Http\Controllers\LoginController as Login;
+use App\Http\Controllers\IngredientController as IngredientV1;
+use App\Http\Controllers\AuthController as Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +17,11 @@ use App\Http\Controllers\LoginController as Login;
 |
 */
 
-/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-});*/
+});
 
-Route::apiResource('v1/users', UserV1::class)->middleware('auth:sanctum');
+Route::apiResource('v1/ingredients', IngredientV1::class)->middleware('auth:sanctum');
 
-Route::post('login', [Login::class, 'login']);
+Route::post('register', [Auth::class, 'register']);
+Route::post('login', [Auth::class, 'login']);
