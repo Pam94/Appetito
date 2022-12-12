@@ -13,15 +13,15 @@ class Recipe extends Model
      * @var array<int, string>
      */
     protected $guarded = [
-        'recipeId'
+        'id'
     ];
 
     /**
      * This function returns the User wich Id is assigned
      * to the Recipe. The user has created the recipe
      */
-    public function user(){
-
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
@@ -29,8 +29,8 @@ class Recipe extends Model
      * This function returns the images associated
      * to a Recipe
      */
-    public function images(){
-
+    public function images()
+    {
         return $this->hasMany(Image::class);
     }
 
@@ -38,8 +38,8 @@ class Recipe extends Model
      * This function returns the categories associated
      * to the recipe in a many-to-many relationship
      */
-    public function categories(){
-
+    public function categories()
+    {
         return $this->belongsToMany(Category::class);
     }
 
@@ -47,8 +47,8 @@ class Recipe extends Model
      * This function returns the ingredients associated
      * to the recipe in a many-to-many relationship
      */
-    public function ingredients(){
-
+    public function ingredients()
+    {
         return $this->belongsToMany(Ingredient::class)->withPivot('grams');
     }
 
@@ -56,10 +56,8 @@ class Recipe extends Model
      * This function returns the plannings associated
      * to the recipe in a many-to-many relationship
      */
-    public function plannings(){
-
+    public function plannings()
+    {
         return $this->belongsToMany(Planning::class)->withPivot('meal');
     }
-
-
 }

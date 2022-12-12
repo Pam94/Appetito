@@ -35,7 +35,6 @@ class User extends Authenticatable
      */
     public function recipes()
     {
-
         return $this->hasMany(Recipe::class);
     }
 
@@ -45,7 +44,6 @@ class User extends Authenticatable
      */
     public function ingredients()
     {
-
         return $this->hasMany(Ingredient::class);
     }
 
@@ -56,7 +54,6 @@ class User extends Authenticatable
      */
     public function plannings()
     {
-
         return $this->hasMany(Planning::class);
     }
 }

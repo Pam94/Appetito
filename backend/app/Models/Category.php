@@ -13,15 +13,15 @@ class Category extends Model
      * @var array<int, string>
      */
     protected $guarded = [
-        'categoryId'
+        'id'
     ];
 
-     /**
+    /**
      * This function returns the recipes associated
      * to a category in a many-to-many relationship
      */
-    public function recipes(){
-
+    public function recipes()
+    {
         return $this->belongsToMany(Recipe::class);
     }
 }

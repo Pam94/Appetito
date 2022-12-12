@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('images', function (Blueprint $table) {
-            $table->id('imageId');
+            $table->id();
             $table->string('url')->nullable();
             $table->binary('image');
-            $table->foreignId('recipeId');
+            $table->foreignId('recipe_id');
             $table->timestamps();
         });
     }

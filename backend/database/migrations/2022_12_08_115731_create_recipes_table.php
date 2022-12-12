@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('recipes', function (Blueprint $table) {
-            $table->id('recipeId');
+            $table->id();
             $table->string('name');
             $table->time('time');
             $table->tinyInteger('portions');

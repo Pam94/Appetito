@@ -13,15 +13,15 @@ class Image extends Model
      * @var array<int, string>
      */
     protected $guarded = [
-        'imageId'
+        'id'
     ];
 
     /**
      * This function returns the Recipe which 
      * has an image associated to
      */
-    public function recipe(){
-
+    public function recipe()
+    {
         return $this->belongsTo(Recipe::class);
     }
 }
