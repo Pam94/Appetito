@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IngredientCategoryRequest;
 use App\Http\Resources\IngredientCategoryResource;
 use App\Models\IngredientCategory;
 use Illuminate\Http\Request;
@@ -25,15 +26,13 @@ class IngredientCategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(IngredientCategoryRequest $request)
     {
         try {
 
             $validateNewIngredientCategory = Validator::make(
                 $request->all(),
-                [
-                    'name' => 'required'
-                ]
+                $request->rules()
             );
 
             if ($validateNewIngredientCategory->fails()) {
