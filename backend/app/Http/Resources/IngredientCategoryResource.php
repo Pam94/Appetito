@@ -18,7 +18,7 @@ class IngredientCategoryResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'icon' => $this->icon,
-            'ingredients' => IngredientResource::collection($this->ingredients)
+            'ingredients' => $this->ingredients
         ];
     }
 }
