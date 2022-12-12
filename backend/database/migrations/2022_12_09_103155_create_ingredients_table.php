@@ -20,7 +20,7 @@ return new class extends Migration
             $table->boolean('pantry')->default(false);
             $table->boolean('shoplist')->default(false);
             $table->foreignId('user_id');
-            $table->foreignId('ingredientCategory_id');
+            $table->foreignId('ingredient_category_id');
             $table->timestamps();
         });
     }
