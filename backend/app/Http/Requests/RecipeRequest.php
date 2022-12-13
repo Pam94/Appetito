@@ -33,7 +33,8 @@ class RecipeRequest extends FormRequest
             'video' => 'optional|string',
             'user_id' => 'required|unsignedBigInteger',
             'ingredients' => 'present|array',
-            'ingredients.*.id' => 'required|unsignedBigInteger'
+            'ingredients.*.id' => 'required|unsignedBigInteger',
+            'ingredients.*.grams' => 'required|integer'
         ];
     }
 }
