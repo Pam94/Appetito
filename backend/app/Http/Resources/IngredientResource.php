@@ -20,7 +20,6 @@ class IngredientResource extends JsonResource
             'icon' => $this->icon,
             'pantry' => $this->pantry,
             'shoplist' => $this->shoplist,
-            'user' => $this->user,
             'category' => $this->category
         ];
     }

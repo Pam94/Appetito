@@ -23,7 +23,6 @@ class RecipeResource extends JsonResource
             'favorite' => $this->favorite,
             'url' => $this->url,
             'video' => $this->video,
-            'user' => $this->user,
             'ingredients' => $this->ingredients,
             'images' => $this->images,
             'categories' => $this->categories

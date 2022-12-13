@@ -16,7 +16,6 @@ class PlanningResource extends JsonResource
     {
         return [
             'date' => $this->date,
-            'user' => $this->user,
             'recipes' => $this->recipes
         ];
     }

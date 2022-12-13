@@ -18,7 +18,6 @@ class ImageResource extends JsonResource
             'id' => $this->id,
             'url' => $this->url,
             'image' => $this->image,
-            'user' => $this->user,
             'recipe' => $this->recipe
         ];
     }
