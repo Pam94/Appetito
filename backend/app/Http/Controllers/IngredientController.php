@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\IngredientRequest;
+use App\Http\Requests\NewIngredientRequest;
+use App\Http\Requests\UpdateIngredientRequest;
 use App\Http\Resources\IngredientResource;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ class IngredientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(IngredientRequest $request)
+    public function store(NewIngredientRequest $request)
     {
         try {
 
@@ -86,11 +87,22 @@ class IngredientController extends Controller
      * @param  \App\Models\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ingredient $ingredient)
+    public function update(UpdateIngredientRequest $request, Ingredient $ingredient)
     {
         try {
 
-            if (!$ingredient->update($request->all())) {
+            $validateUpdateIngredient = Validator::make(
+                $request->all(),
+                $request->rules()
+            );
+
+            if ($validateUpdateIngredient->fails()) {
+
+                return response()->json([
+                    'message' => 'Invalid update Ingredient parameters',
+                    'errors' => $validateUpdateIngredient->errors()
+                ], 401);
+            } elseif (!$ingredient->update($request->all())) {
 
                 return response()->json([
                     'message' => 'Ingredient not updated',
