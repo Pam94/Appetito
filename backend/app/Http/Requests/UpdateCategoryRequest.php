@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ImageRequest extends FormRequest
+class UpdateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class ImageRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,9 +24,8 @@ class ImageRequest extends FormRequest
     public function rules()
     {
         return [
-            'url' => 'optional|string',
-            'image' => 'required|binary',
-            'recipe_id' => 'required|unsignedBigInteger'
+            'name' => 'optional|string',
+            'icon' => 'optional'
         ];
     }
 }

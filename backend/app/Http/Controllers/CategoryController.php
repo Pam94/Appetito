@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\NewCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -29,7 +29,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store(NewCategoryRequest $request)
     {
         try {
 
@@ -83,11 +83,22 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
         try {
 
-            if (!$category->update($request->all())) {
+            $validateUpdateCategory = Validator::make(
+                $request->all(),
+                $request->rules()
+            );
+
+            if ($validateUpdateCategory->fails()) {
+
+                return response()->json([
+                    'message' => 'Invalid update Category parameters',
+                    'errors' => $validateUpdateCategory->errors()
+                ], 401);
+            } elseif (!$category->update($request->all())) {
 
                 return response()->json([
                     'message' => 'Category not updated',
