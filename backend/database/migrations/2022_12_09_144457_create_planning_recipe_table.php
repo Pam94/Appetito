@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('planning_recipe', function (Blueprint $table) {
-            $table->id('planningRecipeId');
-            $table->foreignId('planningId');
-            $table->foreignId('recipeId');
+            $table->id();
+            $table->foreignId('planning_id');
+            $table->foreignId('recipe_id');
             $table->enum('meal', ['Desayuno', 'Comida', 'Cena']);
-            $table->unique(['planningId', 'recipeId', 'meal']);
+            $table->unique(['planning_id', 'recipe_id', 'meal']);
             $table->timestamps();
         });
     }

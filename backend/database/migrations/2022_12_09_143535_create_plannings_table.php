@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('plannings', function (Blueprint $table) {
-            $table->id('planningId');
+            $table->id();
             $table->date('date');
             $table->foreignId('user_id');
             $table->timestamps();

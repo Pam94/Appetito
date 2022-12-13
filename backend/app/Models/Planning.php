@@ -13,7 +13,7 @@ class Planning extends Model
      * @var array<int, string>
      */
     protected $guarded = [
-        'planningId'
+        'id'
     ];
 
     /**
@@ -22,7 +22,6 @@ class Planning extends Model
      */
     public function user()
     {
-
         return $this->belongsTo('user_id');
     }
 
@@ -32,7 +31,6 @@ class Planning extends Model
      */
     public function recipes()
     {
-
         return $this->belongsToMany(Recipe::class)->withPivot('meal');
     }
 }
