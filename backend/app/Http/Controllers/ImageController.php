@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ImageRequest;
+use App\Http\Requests\NewImageRequest;
+use App\Http\Requests\UpdateImageRequest;
 use App\Http\Resources\ImageResource;
 use App\Models\Image;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -29,7 +29,7 @@ class ImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ImageRequest $request)
+    public function store(NewImageRequest $request)
     {
         try {
 
@@ -84,12 +84,22 @@ class ImageController extends Controller
      * @param  \App\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Image $image)
+    public function update(UpdateImageRequest $request, Image $image)
     {
         try {
 
-            if (!$image->update($request->all())) {
+            $validateUpdateImage = Validator::make(
+                $request->all(),
+                $request->rules()
+            );
 
+            if ($validateUpdateImage->fails()) {
+
+                return response()->json([
+                    'message' => 'Invalid update Image parameters',
+                    'errors' => $validateUpdateImage->errors()
+                ], 401);
+            } elseif (!$image->update($request->all())) {
 
                 return response()->json([
                     'message' => 'Image not updated',

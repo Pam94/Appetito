@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('url')->nullable();
             $table->binary('image');
-            $table->foreignId('recipe_id');
+            $table->foreignId('recipe_id')->nullable();
             $table->foreignId('user_id');
             $table->timestamps();
         });
