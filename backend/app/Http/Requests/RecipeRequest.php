@@ -32,6 +32,10 @@ class RecipeRequest extends FormRequest
             'url' => 'optional|string',
             'video' => 'optional|string',
             'user_id' => 'required|unsignedBigInteger',
+            'images' => 'present|array',
+            'images.*.id' => 'required|unsignedBigInteger',
+            'categories' => 'present|array',
+            'categories.*.id' => 'required|unsignedBigInteger',
             'ingredients' => 'present|array',
             'ingredients.*.id' => 'required|unsignedBigInteger',
             'ingredients.*.grams' => 'required|integer'

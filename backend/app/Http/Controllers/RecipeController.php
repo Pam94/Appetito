@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RecipeRequest;
 use App\Http\Resources\RecipeResource;
 use App\Models\Recipe;
+use App\Models\RecipeCategory;
+use App\Models\RecipeIngredient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+
+use APp\Http\Controllers\ImageController;
+use App\Models\Image;
 
 class RecipeController extends Controller
 {
@@ -45,7 +50,7 @@ class RecipeController extends Controller
                 ], 401);
             }
 
-            Recipe::create([
+            $recipe = Recipe::create([
                 'name' => $request->name,
                 'time' => $request->time,
                 'portions' => $request->portions,
@@ -53,9 +58,36 @@ class RecipeController extends Controller
                 'favorite' => $request->favorite,
                 'url' => $request->url,
                 'video' => $request->video,
-                'user_id' => $autenticatedUserId,
-                'ingredients' => $request->ingredients
+                'user_id' => $autenticatedUserId
             ]);
+
+            $recipeId = $recipe->id;
+
+            $request->ingredients->each(function ($ingredient) use ($recipeId) {
+
+                RecipeIngredient::create([
+                    'recipe_id' => $recipeId,
+                    'ingredient_id' => $ingredient->id,
+                    'grams' => $ingredient->grams
+                ]);
+            });
+
+            $request->categories->each(function ($category) use ($recipeId) {
+
+                RecipeCategory::create([
+                    'recipe_id' => $recipeId,
+                    'category_id' => $category->id
+                ]);
+            });
+
+            $request->images->each(function ($image) use ($recipeId) {
+
+                $image = Image::find('image_id', $image->id);
+
+                $image->update([
+                    'recipe_id' => $recipeId
+                ]);
+            });
 
             return response()->json([
                 'message' => 'Recipe Created Successfully'
