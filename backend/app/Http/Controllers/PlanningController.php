@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\PlanningResource;
 use App\Models\Planning;
+use App\Models\PlanningRecipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -47,11 +48,21 @@ class PlanningController extends Controller
                 ], 401);
             }
 
-            Planning::create([
+            $planning = Planning::create([
                 'date' => $request->date,
-                'user_id' => $autenticatedUserId,
-                'recipes' => $request->recipes
+                'user_id' => $autenticatedUserId
             ]);
+
+            $planningId = $planning->id;
+
+            $request->recipes->each(function ($recipe) use ($planningId) {
+
+                PlanningRecipe::create([
+                    'planning_id' => $planningId,
+                    'recipe_id' => $recipe->id,
+                    'meal' => $recipe->meal
+                ]);
+            });
 
             return response()->json([
                 'message' => 'Planning Created Successfully'
