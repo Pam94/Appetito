@@ -6,6 +6,7 @@ use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
@@ -17,7 +18,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return CategoryResource::collection(Category::latest()->paginate());
+        $autenticatedUserId = Auth::guard('sanctum')->id();
+
+        return CategoryResource::collection(Category::where('user_id', $autenticatedUserId)->paginate());
     }
 
     /**
@@ -29,6 +32,8 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         try {
+
+            $autenticatedUserId = Auth::guard('sanctum')->id();
 
             $validateNewCategory = Validator::make(
                 $request->all(),
@@ -45,7 +50,8 @@ class CategoryController extends Controller
 
             Category::create([
                 'name' => $request->name,
-                'icon' => $request->icon
+                'icon' => $request->icon,
+                'user_id' => $autenticatedUserId,
             ]);
 
             return response()->json([

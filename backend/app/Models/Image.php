@@ -24,4 +24,13 @@ class Image extends Model
     {
         return $this->belongsTo(Recipe::class);
     }
+
+    /**
+     * This function returns the User wich Id is assigned
+     * to the Image. The user has created the image
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

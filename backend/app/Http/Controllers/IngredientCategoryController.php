@@ -6,6 +6,7 @@ use App\Http\Requests\IngredientCategoryRequest;
 use App\Http\Resources\IngredientCategoryResource;
 use App\Models\IngredientCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class IngredientCategoryController extends Controller
@@ -17,7 +18,9 @@ class IngredientCategoryController extends Controller
      */
     public function index()
     {
-        return IngredientCategoryResource::collection(IngredientCategory::latest()->paginate());
+        $autenticatedUserId = Auth::guard('sanctum')->id();
+
+        return IngredientCategoryResource::collection(IngredientCategory::where('user_id', $autenticatedUserId)->paginate());
     }
 
     /**
@@ -29,6 +32,8 @@ class IngredientCategoryController extends Controller
     public function store(IngredientCategoryRequest $request)
     {
         try {
+
+            $autenticatedUserId = Auth::guard('sanctum')->id();
 
             $validateNewIngredientCategory = Validator::make(
                 $request->all(),
@@ -45,7 +50,8 @@ class IngredientCategoryController extends Controller
 
             IngredientCategory::create([
                 'name' => $request->name,
-                'icon' => $request->icon
+                'icon' => $request->icon,
+                'user_id' => $autenticatedUserId
             ]);
 
             return response()->json([

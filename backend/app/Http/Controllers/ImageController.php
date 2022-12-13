@@ -6,6 +6,7 @@ use App\Http\Requests\ImageRequest;
 use App\Http\Resources\ImageResource;
 use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ImageController extends Controller
@@ -17,7 +18,9 @@ class ImageController extends Controller
      */
     public function index()
     {
-        return ImageResource::collection(Image::latest()->paginate());
+        $autenticatedUserId = Auth::guard('sanctum')->id();
+
+        return ImageResource::collection(Image::where('user_id', $autenticatedUserId)->paginate());
     }
 
     /**
@@ -29,6 +32,8 @@ class ImageController extends Controller
     public function store(ImageRequest $request)
     {
         try {
+
+            $autenticatedUserId = Auth::guard('sanctum')->id();
 
             $validateNewImage = Validator::make(
                 $request->all(),
@@ -46,7 +51,8 @@ class ImageController extends Controller
             Image::create([
                 'url' => $request->url,
                 'image' => $request->image,
-                'recipe_id' => $request->recipe_id
+                'recipe_id' => $request->recipe_id,
+                'user_id' => $autenticatedUserId
             ]);
 
             return response()->json([

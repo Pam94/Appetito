@@ -24,4 +24,13 @@ class Category extends Model
     {
         return $this->belongsToMany(Recipe::class);
     }
+
+    /**
+     * This function returns the User wich Id is assigned
+     * to the Category. The user has created the category
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
