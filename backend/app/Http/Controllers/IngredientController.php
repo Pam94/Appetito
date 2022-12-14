@@ -6,7 +6,6 @@ use App\Http\Requests\NewIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
 use App\Http\Resources\IngredientResource;
 use App\Models\Ingredient;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
