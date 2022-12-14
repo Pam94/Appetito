@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('recipe_category', function (Blueprint $table) {
-            $table->id('recipeCategoryId');
-            $table->foreignId('recipeId');
-            $table->foreignId('categoryId');
-            $table->unique(['recipeId', 'categoryId']);
+            $table->id();
+            $table->foreignId('recipe_id');
+            $table->foreignId('category_id');
+            $table->unique(['recipe_id', 'category_id']);
             $table->timestamps();
         });
     }

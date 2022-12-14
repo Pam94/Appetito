@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RecipeRequest;
 use App\Http\Resources\RecipeResource;
 use App\Models\Recipe;
 use App\Models\RecipeCategory;
-use App\Models\RecipeIngredient;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-
-use APp\Http\Controllers\ImageController;
+use App\Http\Requests\NewRecipeRequest;
+use App\Http\Requests\UpdateRecipeRequest;
 use App\Models\Image;
+use App\Models\IngredientRecipe;
 
 class RecipeController extends Controller
 {
@@ -34,7 +32,7 @@ class RecipeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RecipeRequest $request)
+    public function store(NewRecipeRequest $request)
     {
         try {
 
@@ -55,39 +53,62 @@ class RecipeController extends Controller
                 'time' => $request->time,
                 'portions' => $request->portions,
                 'instructions' => $request->instructions,
-                'favorite' => $request->favorite,
+                'favorite' => $request->favorite ? $request->favorite : false,
                 'url' => $request->url,
                 'video' => $request->video,
                 'user_id' => $autenticatedUserId
             ]);
 
+            if (!$recipe->id) {
+
+                return response()->json([
+                    'message' => "Recipe not created"
+                ], 401);
+            }
             $recipeId = $recipe->id;
 
-            $request->ingredients->each(function ($ingredient) use ($recipeId) {
+            foreach ($request->ingredients as $ingredient) {
 
-                RecipeIngredient::create([
+                if (!IngredientRecipe::create([
                     'recipe_id' => $recipeId,
-                    'ingredient_id' => $ingredient->id,
-                    'grams' => $ingredient->grams
-                ]);
-            });
+                    'ingredient_id' => $ingredient['id'],
+                    'grams' => $ingredient['grams']
+                ])) {
+                    return response()->json([
+                        'message' => "Recipe Ingredient not created"
+                    ], 401);
+                }
+            }
 
-            $request->categories->each(function ($category) use ($recipeId) {
+            foreach ($request->categories as $category) {
 
-                RecipeCategory::create([
+                if (!RecipeCategory::create([
                     'recipe_id' => $recipeId,
-                    'category_id' => $category->id
-                ]);
-            });
+                    'category_id' => $category['id']
+                ])) {
+                    return response()->json([
+                        'message' => "Recipe Category not created"
+                    ], 401);
+                }
+            }
 
-            $request->images->each(function ($image) use ($recipeId) {
+            foreach ($request->images as $image) {
 
-                $image = Image::find('image_id', $image->id);
+                $imageFound = Image::where('id', $image['id']);
 
-                $image->update([
+                if (!$imageFound) {
+                    return response()->json([
+                        'message' => "Image not found"
+                    ], 401);
+                }
+                if (!$imageFound->update([
                     'recipe_id' => $recipeId
-                ]);
-            });
+                ])) {
+                    return response()->json([
+                        'message' => "Image not updated"
+                    ], 401);
+                }
+            };
 
             return response()->json([
                 'message' => 'Recipe Created Successfully'
@@ -118,11 +139,22 @@ class RecipeController extends Controller
      * @param  \App\Models\Recipe  $recipe
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Recipe $recipe)
+    public function update(UpdateRecipeRequest $request, Recipe $recipe)
     {
         try {
 
-            if (!$recipe->update($request->all())) {
+            $validateUpdateRecipe = Validator::make(
+                $request->all(),
+                $request->rules()
+            );
+
+            if ($validateUpdateRecipe->fails()) {
+
+                return response()->json([
+                    'message' => 'Invalid update Recipe parameters',
+                    'errors' => $validateUpdateRecipe->errors()
+                ], 401);
+            } elseif (!$recipe->update($request->all())) {
 
                 return response()->json([
                     'message' => 'Recipe not updated',

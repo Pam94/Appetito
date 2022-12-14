@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RecipeRequest extends FormRequest
+class NewRecipeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,19 +25,18 @@ class RecipeRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'time' => 'required|time',
-            'portions' => 'required|tinyInteger',
-            'instructions' => 'required|longText',
-            'favorite' => 'required|boolean',
+            'time' => 'required|integer',
+            'portions' => 'required|integer',
+            'instructions' => 'required|string',
+            'favorite' => 'optional|boolean',
             'url' => 'optional|string',
             'video' => 'optional|string',
-            'user_id' => 'required|unsignedBigInteger',
             'images' => 'present|array',
-            'images.*.id' => 'required|unsignedBigInteger',
+            'images.*.id' => 'required',
             'categories' => 'present|array',
-            'categories.*.id' => 'required|unsignedBigInteger',
+            'categories.*.id' => 'required',
             'ingredients' => 'present|array',
-            'ingredients.*.id' => 'required|unsignedBigInteger',
+            'ingredients.*.id' => 'required',
             'ingredients.*.grams' => 'required|integer'
         ];
     }

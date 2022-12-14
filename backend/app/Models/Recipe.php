@@ -38,7 +38,7 @@ class Recipe extends Model
      * This function returns the categories associated
      * to the recipe in a many-to-many relationship
      */
-    public function categories()
+    public function recipeCategories()
     {
         return $this->belongsToMany(Category::class);
     }
