@@ -97,7 +97,18 @@ class PlanningController extends Controller
     {
         try {
 
-            if (!$planning->update($request->all())) {
+            $validateUpdatePlanning = Validator::make(
+                $request->all(),
+                $request->rules()
+            );
+
+            if ($validateUpdatePlanning->fails()) {
+
+                return response()->json([
+                    'message' => 'Invalid update Planning parameters',
+                    'errors' => $validateUpdatePlanning->errors()
+                ], 401);
+            } elseif (!$planning->update($request->all())) {
 
                 return response()->json([
                     'message' => 'Planning not updated',

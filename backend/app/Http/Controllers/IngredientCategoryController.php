@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\IngredientCategoryRequest;
+use App\Http\Requests\NewCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\IngredientCategoryResource;
 use App\Models\IngredientCategory;
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ class IngredientCategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(IngredientCategoryRequest $request)
+    public function store(NewCategoryRequest $request)
     {
         try {
 
@@ -83,11 +84,22 @@ class IngredientCategoryController extends Controller
      * @param  \App\Models\IngredientCategory  $ingredientCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, IngredientCategory $ingredientCategory)
+    public function update(UpdateCategoryRequest $request, IngredientCategory $ingredientCategory)
     {
         try {
 
-            if (!$ingredientCategory->update($request->all())) {
+            $validateUpdateIngredientCategory = Validator::make(
+                $request->all(),
+                $request->rules()
+            );
+
+            if ($validateUpdateIngredientCategory->fails()) {
+
+                return response()->json([
+                    'message' => 'Invalid update Ingredient Category parameters',
+                    'errors' => $validateUpdateIngredientCategory->errors()
+                ], 401);
+            } elseif (!$ingredientCategory->update($request->all())) {
 
                 return response()->json([
                     'message' => 'Ingredient Category not updated',
