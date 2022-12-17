@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRecipeRequest extends FormRequest
+class NewRecipeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,20 +24,20 @@ class UpdateRecipeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'optional|string',
-            'time' => 'optional|integer',
-            'portions' => 'optional|integer',
-            'instructions' => 'optional|string',
-            'favorite' => 'optional|boolean',
-            'url' => 'optional|string',
-            'video' => 'optional|string',
+            'name' => 'required|string',
+            'time' => 'required|numeric',
+            'portions' => 'required|numeric',
+            'instructions' => 'required|string',
+            'favorite' => 'sometimes|boolean',
+            'url' => 'sometimes|url',
+            'video' => 'sometimes|file',
             'images' => 'present|array',
-            'images.*.id' => 'optional',
+            'images.*.id' => 'required|numeric',
             'categories' => 'present|array',
-            'categories.*.id' => 'optional',
+            'categories.*.id' => 'required|numeric',
             'ingredients' => 'present|array',
-            'ingredients.*.id' => 'optional',
-            'ingredients.*.grams' => 'optional|integer'
+            'ingredients.*.id' => 'required|numeric',
+            'ingredients.*.grams' => 'required|numeric'
         ];
     }
 }
