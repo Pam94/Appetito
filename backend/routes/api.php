@@ -32,36 +32,45 @@ Route::middleware('auth:sanctum')->group(function () {
     // api/v1/ingredients POST
     // api/v1/ingredients/{id} PUT
     // api/v1/ingredients/{id} DELETE
-    Route::apiResource('v1/ingredients', IngredientV1::class)
-        ->only(['index', 'show', 'store', 'update', 'destroy']);
+    Route::apiResource('v1/ingredients', IngredientV1::class);
 
     // api/v1/ingredientCategories GET
     // api/v1/ingredientCategories/{id} GET
     // api/v1/ingredientCategories POST
     // api/v1/ingredientCategories/{id} PUT
     // api/v1/ingredientCategories/{id} DELETE
-    Route::apiResource('v1/ingredientCategories', IngredientCategoryV1::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+    Route::apiResource('v1/ingredientCategories', IngredientCategoryV1::class);
 
     // api/v1/categories GET
     // api/v1/categories/{id} GET
     // api/v1/categories POST
     // api/v1/categories/{id} PUT
     // api/v1/categories/{id} DELETE
-    Route::apiResource('v1/categories', CategoryV1::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+    Route::apiResource('v1/categories', CategoryV1::class);
 
     // api/v1/images GET
     // api/v1/images/{id} GET
     // api/v1/images POST
     // api/v1/images/{id} PUT
     // api/v1/images/{id} DELETE
-    Route::apiResource('v1/images', ImageV1::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+    Route::apiResource('v1/images', ImageV1::class);
+
+    /*
+    Route::group(array('prefix' => 'v1/images'), function () {
+
+        Route::get('/', [ImageV1::class, 'index']);
+        Route::get('/{id}', [ImageV1::class, 'show']);
+        Route::post('/', [ImageV1::class, 'store']);
+        Route::put('/{id}', [ImageV1::class, 'update']);
+        Route::delete('/{id}', [ImageV1::class, 'destroy']);
+    })->middleware('api');*/
 
     // api/v1/recipes GET
     // api/v1/recipes/{id} GET
     // api/v1/recipes POST
     // api/v1/recipes/{id} PUT
     // api/v1/recipes/{id} DELETE
-    Route::apiResource('v1/recipes', RecipeV1::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+    Route::apiResource('v1/recipes', RecipeV1::class);
 });
 
 Route::post('register', [Auth::class, 'register']);
