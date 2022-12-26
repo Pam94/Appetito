@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NewPlanningRequest;
+use App\Http\Requests\UpdatePlanningRecipe;
 use App\Http\Resources\PlanningResource;
 use App\Models\Planning;
 use App\Models\PlanningRecipe;
@@ -29,7 +31,7 @@ class PlanningController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NewPlanningRequest $request)
     {
         try {
 
@@ -55,14 +57,14 @@ class PlanningController extends Controller
 
             $planningId = $planning->id;
 
-            $request->recipes->each(function ($recipe) use ($planningId) {
+            foreach ($request->recipes as $recipe) {
 
                 PlanningRecipe::create([
                     'planning_id' => $planningId,
-                    'recipe_id' => $recipe->id,
-                    'meal' => $recipe->meal
+                    'recipe_id' => $recipe['id'],
+                    'meal' => $recipe['meal']
                 ]);
-            });
+            };
 
             return response()->json([
                 'message' => 'Planning Created Successfully'
@@ -93,7 +95,7 @@ class PlanningController extends Controller
      * @param  \App\Models\Planning  $planning
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Planning $planning)
+    public function update(UpdatePlanningRecipe $request, Planning $planning)
     {
         try {
 
