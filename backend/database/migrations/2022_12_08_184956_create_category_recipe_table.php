@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('recipe_category', function (Blueprint $table) {
+        Schema::create('category_recipe', function (Blueprint $table) {
             $table->id();
             $table->foreignId('recipe_id');
             $table->foreignId('category_id');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recipe_category');
+        Schema::dropIfExists('category_recipe');
     }
 };

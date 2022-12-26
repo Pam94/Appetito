@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\RecipeResource;
 use App\Models\Recipe;
-use App\Models\RecipeCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\NewRecipeRequest;
 use App\Http\Requests\UpdateRecipeRequest;
+use App\Models\CategoryRecipe;
 use App\Models\Image;
 use App\Models\IngredientRecipe;
 
@@ -82,7 +82,7 @@ class RecipeController extends Controller
 
             foreach ($request->categories as $category) {
 
-                if (!RecipeCategory::create([
+                if (!CategoryRecipe::create([
                     'recipe_id' => $recipeId,
                     'category_id' => $category['id']
                 ])) {

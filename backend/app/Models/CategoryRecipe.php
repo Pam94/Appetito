@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class RecipeCategory extends Pivot
+class CategoryRecipe extends Pivot
 {
+    protected $table = 'category_recipe';
     //
 }
