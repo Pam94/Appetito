@@ -24,13 +24,4 @@ class IngredientCategory extends Model
     {
         return $this->hasMany(Ingredient::class);
     }
-
-    /**
-     * This function returns the User wich Id is assigned
-     * to the Ingredient Category. The user has created the ingredient category
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }
