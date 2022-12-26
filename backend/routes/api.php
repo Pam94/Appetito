@@ -10,6 +10,7 @@ use App\Http\Controllers\IngredientCategoryController as IngredientCategoryV1;
 use App\Http\Controllers\CategoryController as CategoryV1;
 use App\Http\Controllers\ImageController as ImageV1;
 use App\Http\Controllers\RecipeController as RecipeV1;
+use App\Http\Controllers\PlanningController as PlanningV1;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +72,13 @@ Route::middleware('auth:sanctum')->group(function () {
     // api/v1/recipes/{id} PUT
     // api/v1/recipes/{id} DELETE
     Route::apiResource('v1/recipes', RecipeV1::class);
+
+    // api/v1/plannings GET
+    // api/v1/plannings/{id} GET
+    // api/v1/plannings POST
+    // api/v1/plannings/{id} PUT
+    // api/v1/plannings/{id} DELETE
+    Route::apiResource('v1/plannings', PlanningV1::class);
 });
 
 Route::post('register', [Auth::class, 'register']);
