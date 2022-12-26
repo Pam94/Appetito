@@ -19,9 +19,7 @@ class IngredientCategoryController extends Controller
      */
     public function index()
     {
-        $autenticatedUserId = Auth::guard('sanctum')->id();
-
-        return IngredientCategoryResource::collection(IngredientCategory::where('user_id', $autenticatedUserId)->paginate());
+        return IngredientCategoryResource::collection(IngredientCategory::all());
     }
 
     /**
@@ -33,8 +31,6 @@ class IngredientCategoryController extends Controller
     public function store(NewCategoryRequest $request)
     {
         try {
-
-            $autenticatedUserId = Auth::guard('sanctum')->id();
 
             $validateNewIngredientCategory = Validator::make(
                 $request->all(),
@@ -51,8 +47,7 @@ class IngredientCategoryController extends Controller
 
             IngredientCategory::create([
                 'name' => $request->name,
-                'icon' => $request->icon,
-                'user_id' => $autenticatedUserId
+                'icon' => $request->icon
             ]);
 
             return response()->json([

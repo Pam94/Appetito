@@ -18,9 +18,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $autenticatedUserId = Auth::guard('sanctum')->id();
-
-        return CategoryResource::collection(Category::where('user_id', $autenticatedUserId)->paginate());
+        return CategoryResource::collection(Category::all());
     }
 
     /**
@@ -32,8 +30,6 @@ class CategoryController extends Controller
     public function store(NewCategoryRequest $request)
     {
         try {
-
-            $autenticatedUserId = Auth::guard('sanctum')->id();
 
             $validateNewCategory = Validator::make(
                 $request->all(),
@@ -50,8 +46,7 @@ class CategoryController extends Controller
 
             Category::create([
                 'name' => $request->name,
-                'icon' => $request->icon,
-                'user_id' => $autenticatedUserId,
+                'icon' => $request->icon
             ]);
 
             return response()->json([
