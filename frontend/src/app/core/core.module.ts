@@ -7,7 +7,6 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { MainNavComponent } from './components/main-nav/main-nav.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Constants } from './constants';
 
 
 
@@ -21,8 +20,7 @@ import { Constants } from './constants';
   imports: [
     CommonModule,
     HttpClientModule,
-    ReactiveFormsModule,
-    Constants
+    ReactiveFormsModule
   ]
 })
 export class CoreModule { }
