@@ -3,42 +3,25 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MainNavComponent } from './shared/main-nav/main-nav.component';
-import { HeaderNavComponent } from './shared/header-nav/header-nav.component';
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
-import { RecipesComponent } from './recipes/recipes.component';
-import { RecipeComponent } from './recipe/recipe.component';
-import { IngredientsComponent } from './ingredients/ingredients.component';
-import { IngredientComponent } from './ingredient/ingredient.component';
-import { ShoplistComponent } from './shoplist/shoplist.component';
-import { CalendarComponent } from './calendar/calendar.component';
-import { PlanningComponent } from './planning/planning.component';
-import { ProfileComponent } from './profile/profile.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+
+import { PlanningModule } from './features/planning/planning.module';
+import { RecipeModule } from './features/recipe/recipe.module';
+import { ShoplistModule } from './features/shoplist/shoplist.module';
+import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    MainNavComponent,
-    HeaderNavComponent,
-    RegisterComponent,
-    LoginComponent,
-    RecipesComponent,
-    RecipeComponent,
-    IngredientsComponent,
-    IngredientComponent,
-    ShoplistComponent,
-    CalendarComponent,
-    PlanningComponent,
-    ProfileComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule
+    CoreModule,
+    SharedModule,
+    PlanningModule,
+    RecipeModule,
+    ShoplistModule
   ],
   providers: [],
   bootstrap: [AppComponent]
