@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { HeaderNavComponent } from './header-nav/header-nav.component';
+import { HeaderNavComponent } from './components/header-nav/header-nav.component';
 
 
 
