@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError, throwError } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -10,7 +12,6 @@ import { AuthService } from '../../services/auth.service';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-  errors: any = null;
 
   constructor(
     private fb: FormBuilder,
@@ -27,18 +28,23 @@ export class RegisterComponent {
   }
 
   register() {
-    this.authService.register(this.registerForm.value()).subscribe(
-      (result) => {
-        console.log(result);
-      },
-      (error) => {
-        this.errors = error.error;
-      },
-      () => {
+    this.authService.register(this.registerForm.value)
+      .pipe(catchError(this.handleError))
+      .subscribe(() => {
         this.registerForm.reset();
         this.router.navigate(['login']);
-      }
-    );
+      });
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      console.error('Client-side or network error ocurred', error.error);
+    } else {
+
+      console.error('Backend returned code ${error.status}: ', error.error);
+    }
+
+    return throwError(() => new Error('ERROR'));
   }
 
 }
