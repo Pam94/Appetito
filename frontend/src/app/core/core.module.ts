@@ -7,10 +7,13 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { MainNavComponent } from './components/main-nav/main-nav.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-
-
+import { ApiHttpService } from './services/api-http.service';
+import { CoreRoutingModule } from './core-routing.module';
 
 @NgModule({
+  providers: [
+    ApiHttpService
+  ],
   declarations: [
     RegisterComponent,
     LoginComponent,
@@ -20,7 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CoreRoutingModule
   ]
 })
 export class CoreModule { }
