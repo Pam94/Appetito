@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Constants } from '../constants';
+import { Observable } from 'rxjs';
+import { Constants } from 'src/app/shared/constants';
 import { User } from '../models/user.model';
 import { ApiHttpService } from './api-http.service';
 
@@ -12,11 +13,11 @@ export class AuthService {
     private apiHttpService: ApiHttpService,
     private constants: Constants) { }
 
-  register(user: User) {
+  register(user: User): Observable<any> {
     return this.apiHttpService.post(this.constants.API_REGISTER, user);
   }
 
-  login(user: User) {
+  login(user: User): Observable<any> {
     return this.apiHttpService.post(this.constants.API_LOGIN, user);
   }
 }
