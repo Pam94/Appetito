@@ -9,7 +9,6 @@ import { PlanningComponent } from './components/planning/planning.component';
 
 @NgModule({
   declarations: [
-
     CalendarComponent,
     PlanningComponent
   ],
