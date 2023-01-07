@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Constants } from 'src/app/shared/constants';
-import { User } from '../models/user.model';
+import { User, UserRegister } from '../models/user.model';
 import { ApiHttpService } from './api-http.service';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class AuthService {
     private apiHttpService: ApiHttpService,
     private constants: Constants) { }
 
-  register(user: User): Observable<any> {
+  register(user: UserRegister): Observable<any> {
     return this.apiHttpService.post(this.constants.API_REGISTER, user);
   }
 

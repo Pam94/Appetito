@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
+import { passwordValidator } from 'src/app/shared/directives/password-validator.directive';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -17,14 +18,13 @@ export class RegisterComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router) {
-
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      repeatPassword: ['', Validators.required]
-    });
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      repeatPassword: ['', [Validators.required, Validators.minLength(8)]]
+    }, { validators: passwordValidator });
   }
 
   register() {
@@ -35,6 +35,12 @@ export class RegisterComponent {
         this.router.navigate(['login']);
       });
   }
+
+  get name() { return this.registerForm.get('name'); }
+  get surname() { return this.registerForm.get('surname'); }
+  get email() { return this.registerForm.get('email'); }
+  get password() { return this.registerForm.get('password'); }
+  get repeatPassword() { return this.registerForm.get('repeatPassword'); }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
