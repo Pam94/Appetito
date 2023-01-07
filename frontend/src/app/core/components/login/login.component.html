@@ -11,6 +11,15 @@
 
                         <label class="form-label" for="email">Email</label>
                         <input type="email" id="email" class="form-control" formControlName="email" />
+                        <div *ngIf="email && email.invalid && (email.dirty || email.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="email.hasError('required')">
+                                Email obligatorio
+                            </div>
+                            <div *ngIf="email.hasError('email')">
+                                Formato no válido
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -20,10 +29,14 @@
                         <label class="form-label" for="password">Contraseña</label>
                         <input type="password" id="password" class="form-control" formControlName="password"
                             autocomplete="on" />
+                        <div *ngIf="password && password.invalid && (password.dirty || password.touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="password.hasError('required')">
+                                Contraseña obligatoria
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-
 
                 <div class="d-flex flex-row align-items-center mb-4">
 

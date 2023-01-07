@@ -21,7 +21,7 @@ export class LoginComponent {
     private tokenService: TokenService) {
 
     this.loginForm = this.fb.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       rememberToken: ['']
     });
@@ -37,6 +37,9 @@ export class LoginComponent {
         this.router.navigate(['planning']);
       });
   }
+
+  get email() { return this.loginForm.get('email'); }
+  get password() { return this.loginForm.get('password'); }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
