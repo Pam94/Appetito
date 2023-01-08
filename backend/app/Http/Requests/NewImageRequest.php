@@ -25,7 +25,7 @@ class NewImageRequest extends FormRequest
     {
         return [
             'url' => 'sometimes|url',
-            'image_name' => 'required|string',
+            'image' => 'required|image',
             'recipe_id' => 'sometimes|numeric'
         ];
     }

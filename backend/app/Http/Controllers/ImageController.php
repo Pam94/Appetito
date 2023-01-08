@@ -48,12 +48,24 @@ class ImageController extends Controller
                 ], 401);
             }
 
-            Image::create([
-                'url' => $request->url,
-                'image_name' => $request->image_name,
-                'recipe_id' => $request->recipe_id,
-                'user_id' => $autenticatedUserId
-            ]);
+            if ($request->hasFile('image')) {
+
+                $request->validate([
+                    'image' => 'mimes::jpeg,jpg,png'
+                ]);
+
+                $imageFile = $request->file('image');
+
+                $imageFile->store('recipes', 'private');
+
+                Image::create([
+                    'url' => $request->url,
+                    'image_name' => $imageFile->hashName(),
+                    'recipe_id' => $request->recipe_id,
+                    'user_id' => $autenticatedUserId
+                ]);
+            }
+
 
             return response()->json([
                 'message' => 'Image Created Successfully'
