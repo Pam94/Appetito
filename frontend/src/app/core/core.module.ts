@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { MainNavComponent } from './components/main-nav/main-nav.component';
+
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ApiHttpService } from './services/api-http.service';
@@ -17,8 +17,7 @@ import { CoreRoutingModule } from './core-routing.module';
   declarations: [
     RegisterComponent,
     LoginComponent,
-    ProfileComponent,
-    MainNavComponent
+    ProfileComponent
   ],
   imports: [
     CommonModule,

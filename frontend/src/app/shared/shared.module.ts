@@ -7,6 +7,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { Constants } from './constants';
 import { SharedRoutingModule } from './shared-routing.module';
+import { MainNavComponent } from './components/main-nav/main-nav.component';
 
 @NgModule({
   providers: [
@@ -19,11 +20,15 @@ import { SharedRoutingModule } from './shared-routing.module';
     TokenService
   ],
   declarations: [
-    HeaderNavComponent
+    HeaderNavComponent,
+    MainNavComponent
   ],
   imports: [
     CommonModule,
     SharedRoutingModule
+  ],
+  exports: [
+    MainNavComponent
   ]
 })
 export class SharedModule { }

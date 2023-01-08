@@ -5,6 +5,7 @@ import { PlanningRoutingModule } from './planning-routing.module';
 
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { PlanningComponent } from './components/planning/planning.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { PlanningComponent } from './components/planning/planning.component';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     PlanningRoutingModule
   ]
 })
