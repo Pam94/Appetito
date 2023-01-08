@@ -56,7 +56,7 @@ class ImageController extends Controller
 
                 $imageFile = $request->file('image');
 
-                $imageFile->store('recipes', 'private');
+                $imageFile->store('images', 'private');
 
                 Image::create([
                     'url' => $request->url,
@@ -111,7 +111,34 @@ class ImageController extends Controller
                     'message' => 'Invalid update Image parameters',
                     'errors' => $validateUpdateImage->errors()
                 ], 401);
-            } elseif (!$image->update($request->all())) {
+            }
+
+            if ($request->hasFile('image')) {
+
+                $request->validate([
+                    'image' => 'mimes::jpeg,jpg,png'
+                ]);
+
+                (new StorageController)->removeImage($image->image_name);
+
+                $imageFile = $request->file('image');
+                $imageFile->store('images', 'private');
+
+                if (!$image->update([
+                    'url' => $request->url,
+                    'image_name' => $imageFile->hashName(),
+                    'recipe_id' => $request->recipe_id
+                ])) {
+
+                    return response()->json([
+                        'message' => 'Image not updated',
+                        'data' => $image
+                    ], 401);
+                }
+            } elseif (!$image->update([
+                'url' => $request->url,
+                'recipe_id' => $request->recipe_id
+            ])) {
 
                 return response()->json([
                     'message' => 'Image not updated',
@@ -139,6 +166,8 @@ class ImageController extends Controller
     public function destroy(Image $image)
     {
         if ($image->delete()) {
+
+            (new StorageController)->removeImage($image->image_name);
 
             return response()->json([
                 'message' => 'Image deleted successfully'

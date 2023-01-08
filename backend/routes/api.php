@@ -11,6 +11,7 @@ use App\Http\Controllers\CategoryController as CategoryV1;
 use App\Http\Controllers\ImageController as ImageV1;
 use App\Http\Controllers\RecipeController as RecipeV1;
 use App\Http\Controllers\PlanningController as PlanningV1;
+use App\Http\Controllers\StorageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,10 +23,6 @@ use App\Http\Controllers\PlanningController as PlanningV1;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::middleware('auth:sanctum')->group(function () {
     // api/v1/ingredients GET
@@ -56,16 +53,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // api/v1/images/{id} DELETE
     Route::apiResource('v1/images', ImageV1::class);
 
-    /*
-    Route::group(array('prefix' => 'v1/images'), function () {
-
-        Route::get('/', [ImageV1::class, 'index']);
-        Route::get('/{id}', [ImageV1::class, 'show']);
-        Route::post('/', [ImageV1::class, 'store']);
-        Route::put('/{id}', [ImageV1::class, 'update']);
-        Route::delete('/{id}', [ImageV1::class, 'destroy']);
-    })->middleware('api');*/
-
     // api/v1/recipes GET
     // api/v1/recipes/{id} GET
     // api/v1/recipes POST
@@ -79,8 +66,14 @@ Route::middleware('auth:sanctum')->group(function () {
     // api/v1/plannings/{id} PUT
     // api/v1/plannings/{id} DELETE
     Route::apiResource('v1/plannings', PlanningV1::class);
+
+    Route::get('images/{filename}', [StorageController::class, 'getImage']);
 });
 
 Route::post('register', [Auth::class, 'register']);
 Route::post('login', [Auth::class, 'login']);
 Route::post('logout', [Auth::class, 'logout']);
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
