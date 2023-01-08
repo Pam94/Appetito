@@ -25,7 +25,7 @@ class NewCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'icon_name' => 'required|string'
+            'icon' => 'required|image'
         ];
     }
 }

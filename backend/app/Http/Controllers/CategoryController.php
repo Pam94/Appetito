@@ -44,10 +44,21 @@ class CategoryController extends Controller
                 ], 401);
             }
 
-            Category::create([
-                'name' => $request->name,
-                'icon_name' => $request->icon_name
-            ]);
+            if ($request->hasFile('icon')) {
+
+                $request->validate([
+                    'icon' => 'mimes::jpeg,jpg,png'
+                ]);
+
+                $imageFile = $request->file('icon');
+
+                $imageFile->store('images', 'private');
+
+                Category::create([
+                    'name' => $request->name,
+                    'icon_name' => $imageFile->hashName()
+                ]);
+            }
 
             return response()->json([
                 'message' => 'Category Created Successfully'
@@ -93,6 +104,29 @@ class CategoryController extends Controller
                     'message' => 'Invalid update Category parameters',
                     'errors' => $validateUpdateCategory->errors()
                 ], 401);
+            }
+
+            if ($request->hasFile('icon')) {
+
+                $request->validate([
+                    'icon' => 'mimes::jpeg,jpg,png'
+                ]);
+
+                (new StorageController)->removeImage($category->icon_name);
+
+                $imageFile = $request->file('icon');
+                $imageFile->store('images', 'private');
+
+                if (!$category->update([
+                    'name' => $category->name,
+                    'icon_name' => $imageFile->hashName()
+                ])) {
+
+                    return response()->json([
+                        'message' => 'Image not updated',
+                        'data' => $category
+                    ], 401);
+                }
             } elseif (!$category->update($request->all())) {
 
                 return response()->json([
@@ -122,6 +156,8 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         if ($category->delete()) {
+
+            (new StorageController)->removeImage($category->icon_name);
 
             return response()->json([
                 'message' => 'Category deleted successfully'

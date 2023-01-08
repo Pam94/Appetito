@@ -66,7 +66,6 @@ class ImageController extends Controller
                 ]);
             }
 
-
             return response()->json([
                 'message' => 'Image Created Successfully'
             ], 200);
