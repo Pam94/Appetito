@@ -1,2 +1,43 @@
-<p>planning works!</p>
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-10 col-lg-6 col-xl-5 order-lg-2">
+
+            <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Planificación</p>
+
+            <div id="dayTab">
+                <ul class="nav justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-arrow-left"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="list-group list-group-flush">
+                <!-- <a *ngFor="let recipe of recipes" [routerLink]="['/recipe', recipe.ID]"
+                    class="list-group-item list-group-item-action animate__animated animate__bounce animate__fadeIn">
+                    <div class="d-flex w-100 justify-content-between">
+                        <img>
+                        <h5> {{recipe.name}}</h5>
+                    </div>
+                </a>
+            -->
+            </div>
+            <!-- Lista recetas planificadas -->
+        </div>
+        <div class="d-none d-lg-flex col-md-10 col-lg-6 col-xl-7 align-items-center order-lg-1">
+            <p>Vista calendario</p>
+            <!-- Componente calendario - esconderlo para un tamaño pequeño -->
+        </div>
+    </div>
+</div>
 <app-main-nav></app-main-nav>
