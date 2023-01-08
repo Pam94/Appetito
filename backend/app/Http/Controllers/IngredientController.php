@@ -50,7 +50,6 @@ class IngredientController extends Controller
 
             Ingredient::create([
                 'name' => $request->name,
-                'icon' => $request->icon,
                 'pantry' => $request->pantry ? $request->pantry : false,
                 'shoplist' => $request->shoplist ? $request->shoplist : false,
                 'user_id' => $autenticatedUserId,

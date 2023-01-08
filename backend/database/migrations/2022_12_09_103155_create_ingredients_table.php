@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->binary('icon')->nullable();
             $table->boolean('pantry')->default(false);
             $table->boolean('shoplist')->default(false);
             $table->foreignId('user_id');

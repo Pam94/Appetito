@@ -25,7 +25,6 @@ class NewIngredientRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'icon' => 'sometimes|image',
             'pantry' => 'sometimes|boolean',
             'shoplist' => 'sometimes|boolean',
             'ingredient_category_id' => 'required|numeric'

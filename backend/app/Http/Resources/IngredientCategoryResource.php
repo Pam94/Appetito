@@ -17,7 +17,7 @@ class IngredientCategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'icon' => $this->icon,
+            'icon_name' => $this->icon_name,
             'ingredients' => $this->ingredients
         ];
     }

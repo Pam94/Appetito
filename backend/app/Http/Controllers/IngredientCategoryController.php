@@ -47,7 +47,7 @@ class IngredientCategoryController extends Controller
 
             IngredientCategory::create([
                 'name' => $request->name,
-                'icon' => $request->icon
+                'icon_name' => $request->icon_name
             ]);
 
             return response()->json([

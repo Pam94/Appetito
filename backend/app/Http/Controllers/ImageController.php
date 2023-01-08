@@ -50,7 +50,7 @@ class ImageController extends Controller
 
             Image::create([
                 'url' => $request->url,
-                'image' => $request->image,
+                'image_name' => $request->image_name,
                 'recipe_id' => $request->recipe_id,
                 'user_id' => $autenticatedUserId
             ]);

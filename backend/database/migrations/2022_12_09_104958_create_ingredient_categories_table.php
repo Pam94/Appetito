@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('ingredient_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->binary('icon')->nullable();
+            $table->string('icon_name')->nullable();
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->string('url')->nullable();
-            $table->binary('image');
+            $table->string('image_name');
             $table->foreignId('recipe_id')->nullable();
             $table->foreignId('user_id');
             $table->timestamps();

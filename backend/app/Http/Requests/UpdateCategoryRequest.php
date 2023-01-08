@@ -25,7 +25,7 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             'name' => 'sometimes|string',
-            'icon' => 'sometimes|image'
+            'icon_name' => 'sometimes|string'
         ];
     }
 }

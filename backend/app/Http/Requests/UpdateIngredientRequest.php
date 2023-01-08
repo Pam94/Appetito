@@ -25,7 +25,6 @@ class UpdateIngredientRequest extends FormRequest
     {
         return [
             'name' => 'sometimes|string',
-            'icon' => 'sometimes|image',
             'pantry' => 'sometimes|boolean',
             'shoplist' => 'sometimes|boolean',
             'ingredient_category_id' => 'sometimes|numeric'

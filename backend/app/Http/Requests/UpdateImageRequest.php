@@ -25,7 +25,7 @@ class UpdateImageRequest extends FormRequest
     {
         return [
             'url' => 'sometimes|url',
-            'image' => 'sometimes|image',
+            'image_name' => 'sometimes|string',
             'recipe_id' => 'sometimes|numeric'
         ];
     }
