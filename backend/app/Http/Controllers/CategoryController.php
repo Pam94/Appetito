@@ -117,10 +117,10 @@ class CategoryController extends Controller
                 $imageFile = $request->file('icon');
                 $imageFile->store('images', 'private');
 
-                if (!$category->update([
-                    'name' => $category->name,
-                    'icon_name' => $imageFile->hashName()
-                ])) {
+                $request->request->remove('icon');
+                $request->request->add(['icon_name' => $imageFile->hashName()]);
+
+                if (!$category->update($request->all())) {
 
                     return response()->json([
                         'message' => 'Image not updated',

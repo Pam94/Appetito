@@ -6,8 +6,6 @@ use App\Http\Requests\NewCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\IngredientCategoryResource;
 use App\Models\IngredientCategory;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class IngredientCategoryController extends Controller
@@ -45,10 +43,21 @@ class IngredientCategoryController extends Controller
                 ], 401);
             }
 
-            IngredientCategory::create([
-                'name' => $request->name,
-                'icon_name' => $request->icon_name
-            ]);
+            if ($request->hasFile('icon')) {
+
+                $request->validate([
+                    'icon' => 'mimes::jpeg,jpg,png'
+                ]);
+
+                $imageFile = $request->file('icon');
+
+                $imageFile->store('images', 'private');
+
+                IngredientCategory::create([
+                    'name' => $request->name,
+                    'icon_name' => $imageFile->hashName()
+                ]);
+            }
 
             return response()->json([
                 'message' => 'Ingredient Category Created Successfully'
@@ -94,6 +103,29 @@ class IngredientCategoryController extends Controller
                     'message' => 'Invalid update Ingredient Category parameters',
                     'errors' => $validateUpdateIngredientCategory->errors()
                 ], 401);
+            }
+
+            if ($request->hasFile('icon')) {
+
+                $request->validate([
+                    'icon' => 'mimes::jpeg,jpg,png'
+                ]);
+
+                (new StorageController)->removeImage($ingredientCategory->icon_name);
+
+                $imageFile = $request->file('icon');
+                $imageFile->store('images', 'private');
+
+                $request->request->remove('icon');
+                $request->request->add(['icon_name' => $imageFile->hashName()]);
+
+                if (!$ingredientCategory->update($request->all())) {
+
+                    return response()->json([
+                        'message' => 'Image not updated',
+                        'data' => $ingredientCategory
+                    ], 401);
+                }
             } elseif (!$ingredientCategory->update($request->all())) {
 
                 return response()->json([
@@ -123,6 +155,8 @@ class IngredientCategoryController extends Controller
     public function destroy(IngredientCategory $ingredientCategory)
     {
         if ($ingredientCategory->delete()) {
+
+            (new StorageController)->removeImage($ingredientCategory->icon_name);
 
             return response()->json([
                 'message' => 'Ingredient Category deleted successfully'

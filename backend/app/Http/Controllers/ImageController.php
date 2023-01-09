@@ -123,21 +123,17 @@ class ImageController extends Controller
                 $imageFile = $request->file('image');
                 $imageFile->store('images', 'private');
 
-                if (!$image->update([
-                    'url' => $request->url,
-                    'image_name' => $imageFile->hashName(),
-                    'recipe_id' => $request->recipe_id
-                ])) {
+                $request->request->remove('image');
+                $request->request->add(['image_name' => $imageFile->hashName()]);
+
+                if (!$image->update($request->all())) {
 
                     return response()->json([
                         'message' => 'Image not updated',
                         'data' => $image
                     ], 401);
                 }
-            } elseif (!$image->update([
-                'url' => $request->url,
-                'recipe_id' => $request->recipe_id
-            ])) {
+            } elseif (!$image->update($request->all())) {
 
                 return response()->json([
                     'message' => 'Image not updated',
