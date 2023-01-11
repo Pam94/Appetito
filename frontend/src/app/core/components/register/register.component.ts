@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
-import { passwordValidator } from 'src/app/shared/directives/password-validator.directive';
+import { passwordValidator } from 'src/app/core/directives/password-validator.directive';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
