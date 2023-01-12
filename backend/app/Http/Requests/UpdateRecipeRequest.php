@@ -30,7 +30,6 @@ class UpdateRecipeRequest extends FormRequest
             'instructions' => 'sometimes|string',
             'favorite' => 'sometimes|boolean',
             'url' => 'sometimes|url',
-            'video' => 'sometimes|file',
             'images' => 'present|array',
             'images.*.id' => 'required|numeric',
             'categories' => 'present|array',

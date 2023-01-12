@@ -21,7 +21,6 @@ return new class extends Migration
             $table->longText('instructions');
             $table->boolean('favorite');
             $table->string('url')->nullable();
-            $table->string('video')->nullable();
             $table->foreignId('user_id');
             $table->timestamps();
         });

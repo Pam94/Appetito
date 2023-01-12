@@ -55,7 +55,6 @@ class RecipeController extends Controller
                 'instructions' => $request->instructions,
                 'favorite' => $request->favorite ? $request->favorite : false,
                 'url' => $request->url,
-                'video' => $request->video,
                 'user_id' => $autenticatedUserId
             ]);
 
