@@ -1,7 +1,7 @@
 import { DatePipe, formatDate } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { catchError, EMPTY, throwError } from 'rxjs';
 import { Recipe } from 'src/app/shared/models/recipe.model';
 import { PlanningService } from '../../services/planning.service';
 
@@ -12,7 +12,7 @@ import { PlanningService } from '../../services/planning.service';
   providers: [DatePipe]
 })
 export class PlanningComponent {
-  recipes!: any[];
+  recipes!: Recipe[];
   date!: Date;
   dateString: string;
 
@@ -35,6 +35,9 @@ export class PlanningComponent {
     this.date.setDate(this.date.getDate() + 1);
 
     var nextDay = formatDate(this.date, 'yyyy-MM-dd', 'en');
+    this.dateString = nextDay;
+
+    this.recipes = [];
 
     this.planningService.getPlanningByDate(nextDay)
       .pipe(catchError(this.handleError))
@@ -43,16 +46,21 @@ export class PlanningComponent {
       });
   }
 
-  previous() {
+  previousDay() {
 
     this.date.setDate(this.date.getDate() - 1);
 
-    var nextDay = formatDate(this.date, 'yyyy-MM-dd', 'en');
+    var previousDay = formatDate(this.date, 'yyyy-MM-dd', 'en');
+    this.dateString = previousDay;
 
-    this.planningService.getPlanningByDate(nextDay)
+    this.recipes = [];
+
+    this.planningService.getPlanningByDate(previousDay)
       .pipe(catchError(this.handleError))
-      .subscribe((data) => {
-        this.recipes = data.data.recipes;
+      .subscribe({
+        next: (data) => {
+          this.recipes = data.data.recipes;
+        }
       });
   }
 
@@ -63,6 +71,6 @@ export class PlanningComponent {
       console.error('Backend returned code: ', error.status, error.error);
     }
 
-    return throwError(() => new Error('ERROR'));
+    return EMPTY;
   }
 }
