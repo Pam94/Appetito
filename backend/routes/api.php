@@ -68,12 +68,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('v1/plannings', PlanningV1::class);
 
     Route::get('images/{filename}', [StorageController::class, 'getImage']);
+
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 });
 
 Route::post('register', [Auth::class, 'register']);
 Route::post('login', [Auth::class, 'login']);
 Route::post('logout', [Auth::class, 'logout']);
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});

@@ -16,6 +16,11 @@ class Planning extends Model
         'id'
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'date';
+    }
+
     /**
      * This function returns the user responsible
      * of creating the planning

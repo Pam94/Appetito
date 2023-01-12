@@ -85,7 +85,15 @@ class PlanningController extends Controller
      */
     public function show(Planning $planning)
     {
-        return new PlanningResource($planning);
+        $autenticatedUserId = Auth::guard('sanctum')->id();
+
+        if ($planning->user_id === $autenticatedUserId) {
+            return new PlanningResource($planning);
+        } else {
+            return response()->json([
+                'message' => 'Planning not found'
+            ], 404);
+        }
     }
 
     /**

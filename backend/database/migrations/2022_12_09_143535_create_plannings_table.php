@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->date('date');
             $table->foreignId('user_id');
+            $table->unique(['date', 'user_id']);
             $table->timestamps();
         });
     }

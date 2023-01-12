@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row justify-content-center align-items-center">
-        <div class="col-md-10 col-lg-6 col-xl-5 order-lg-2">
+        <div class="col-md-10 col-lg-6 col-xl-5">
 
             <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Planificación</p>
 
@@ -11,32 +11,29 @@
                             <i class="bi bi-arrow-left"></i>
                         </a>
                     </li>
+                    <li class="nav-item">{{dateString}}</li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" role="button" (click)="nextDay()">
                             <i class="bi bi-arrow-right"></i>
                         </a>
                     </li>
                 </ul>
             </div>
 
-            <div class="list-group list-group-flush">
-                <!-- <a *ngFor="let recipe of recipes" [routerLink]="['/recipe', recipe.ID]"
-                    class="list-group-item list-group-item-action animate__animated animate__bounce animate__fadeIn">
-                    <div class="d-flex w-100 justify-content-between">
-                        <img>
-                        <h5> {{recipe.name}}</h5>
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <a *ngFor="let recipe of recipes" [routerLink]="['/recipe', recipe.id]"
+                    class="animate__animated animate__bounce animate__fadeIn">
+                    <div class="col">
+                        <div class="card">
+                            <!--<img src="..." class="card-img-top" alt="...">-->
+                            <div class="card-body">
+                                <h5 class="card-title">{{recipe.name}}</h5>
+                                <p class="card-text">{{recipe.pivot.meal}}</p>
+                            </div>
+                        </div>
                     </div>
                 </a>
-            -->
             </div>
-            <!-- Lista recetas planificadas -->
-        </div>
-        <div class="d-none d-lg-flex col-md-10 col-lg-6 col-xl-7 align-items-center order-lg-1">
-            <p>Vista calendario</p>
-            <!-- Componente calendario - esconderlo para un tamaño pequeño -->
         </div>
     </div>
 </div>
