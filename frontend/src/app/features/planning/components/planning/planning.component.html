@@ -25,10 +25,16 @@
                     class="animate__animated animate__bounce animate__fadeIn">
                     <div class="col">
                         <div class="card">
-                            <!--<img src="..." class="card-img-top" alt="...">-->
-                            <div class="card-body">
-                                <h5 class="card-title">{{recipe.name}}</h5>
-                                <p class="card-text">{{recipe.pivot.meal}}</p>
+                            <div class="row g-0">
+                                <div class="col">
+                                    <img src="{{imagePath}}.{{recipe.image_name}}" class="card-img-top">
+                                </div>
+                                <div class="col-7">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{recipe.name}}</h5>
+                                        <p class="card-text">{{recipe.pivot.meal}}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
