@@ -48,6 +48,20 @@ class RecipeController extends Controller
                 ], 401);
             }
 
+            $imageHashName = '';
+
+            if ($request->hasFile('image')) {
+
+                $request->validate([
+                    'image' => 'mimes::jpeg,jpg,png'
+                ]);
+
+                $imageFile = $request->file('image');
+                $imageHashName = $imageFile->hashName();
+
+                (new StorageController)->saveImage($imageFile, $imageHashName);
+            }
+
             $recipe = Recipe::create([
                 'name' => $request->name,
                 'time' => $request->time,
@@ -55,6 +69,7 @@ class RecipeController extends Controller
                 'instructions' => $request->instructions,
                 'favorite' => $request->favorite ? $request->favorite : false,
                 'url' => $request->url,
+                'image' => $imageHashName,
                 'user_id' => $autenticatedUserId
             ]);
 
@@ -90,24 +105,6 @@ class RecipeController extends Controller
                     ], 401);
                 }
             }
-
-            foreach ($request->images as $image) {
-
-                $imageFound = Image::where('id', $image['id']);
-
-                if (!$imageFound) {
-                    return response()->json([
-                        'message' => "Image not found"
-                    ], 401);
-                }
-                if (!$imageFound->update([
-                    'recipe_id' => $recipeId
-                ])) {
-                    return response()->json([
-                        'message' => "Image not updated"
-                    ], 401);
-                }
-            };
 
             return response()->json([
                 'message' => 'Recipe Created Successfully'
@@ -153,7 +150,27 @@ class RecipeController extends Controller
                     'message' => 'Invalid update Recipe parameters',
                     'errors' => $validateUpdateRecipe->errors()
                 ], 401);
-            } elseif (!$recipe->update($request->all())) {
+            }
+
+            if ($request->hasFile('image')) {
+
+                $request->validate([
+                    'image' => 'mimes::jpeg,jpg,png'
+                ]);
+
+                if ($recipe->image !== '') {
+                    (new StorageController)->removeImage($recipe->image);
+                }
+
+                $imageFile = $request->file('image');
+                $imageHashName = $imageFile->hashName();
+                (new StorageController)->saveImage($imageFile, $imageHashName);
+
+                $request->request->remove('image');
+                $request->request->add(['image_name' => $imageHashName]);
+            }
+
+            if (!$recipe->update($request->all())) {
 
                 return response()->json([
                     'message' => 'Recipe not updated',
@@ -182,6 +199,8 @@ class RecipeController extends Controller
     public function destroy(Recipe $recipe)
     {
         if ($recipe->delete()) {
+
+            (new StorageController)->removeImage($recipe->image);
 
             return response()->json([
                 'message' => 'Recipe deleted successfully'

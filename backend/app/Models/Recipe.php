@@ -26,15 +26,6 @@ class Recipe extends Model
     }
 
     /**
-     * This function returns the images associated
-     * to a Recipe
-     */
-    public function images()
-    {
-        return $this->hasMany(Image::class);
-    }
-
-    /**
      * This function returns the categories associated
      * to the recipe in a many-to-many relationship
      */

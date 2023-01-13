@@ -46,13 +46,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // api/v1/categories/{id} DELETE
     Route::apiResource('v1/categories', CategoryV1::class);
 
-    // api/v1/images GET
-    // api/v1/images/{id} GET
-    // api/v1/images POST
-    // api/v1/images/{id} PUT
-    // api/v1/images/{id} DELETE
-    Route::apiResource('v1/images', ImageV1::class);
-
     // api/v1/recipes GET
     // api/v1/recipes/{id} GET
     // api/v1/recipes POST
@@ -67,8 +60,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // api/v1/plannings/{id} DELETE
     Route::apiResource('v1/plannings', PlanningV1::class);
 
-    Route::get('images/{filename}', [StorageController::class, 'getImage']);
-
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
@@ -77,3 +68,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('register', [Auth::class, 'register']);
 Route::post('login', [Auth::class, 'login']);
 Route::post('logout', [Auth::class, 'logout']);
+
+Route::get('images/{filename}', [StorageController::class, 'getImage']);
+Route::get('thumbnails/{filename}', [StorageController::class, 'getThumbnail']);
