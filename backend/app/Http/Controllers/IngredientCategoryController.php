@@ -118,15 +118,9 @@ class IngredientCategoryController extends Controller
 
                 $request->request->remove('icon');
                 $request->request->add(['icon_name' => $imageFile->hashName()]);
+            }
 
-                if (!$ingredientCategory->update($request->all())) {
-
-                    return response()->json([
-                        'message' => 'Image not updated',
-                        'data' => $ingredientCategory
-                    ], 401);
-                }
-            } elseif (!$ingredientCategory->update($request->all())) {
+            if (!$ingredientCategory->update($request->all())) {
 
                 return response()->json([
                     'message' => 'Ingredient Category not updated',
