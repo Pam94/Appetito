@@ -6,10 +6,15 @@ use App\Http\Requests\NewCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\IngredientCategoryResource;
 use App\Models\IngredientCategory;
+use App\Services\StorageService;
 use Illuminate\Support\Facades\Validator;
 
 class IngredientCategoryController extends Controller
 {
+
+    public function __construct(private StorageService $storageService)
+    {
+    }
     /**
      * Display a listing of the resource.
      *
@@ -50,12 +55,13 @@ class IngredientCategoryController extends Controller
                 ]);
 
                 $imageFile = $request->file('icon');
+                $imageHashName = $imageFile->hashName();
 
-                $imageFile->store('images', 'private');
+                $this->storageService->saveThumbnail($imageFile, $imageHashName);
 
                 IngredientCategory::create([
                     'name' => $request->name,
-                    'icon_name' => $imageFile->hashName()
+                    'icon_name' => $imageHashName
                 ]);
             }
 
@@ -111,13 +117,16 @@ class IngredientCategoryController extends Controller
                     'icon' => 'mimes::jpeg,jpg,png'
                 ]);
 
-                (new StorageController)->removeImage($ingredientCategory->icon_name);
+                $this->storageService->removeThumbnail($ingredientCategory->icon_name);
 
                 $imageFile = $request->file('icon');
-                $imageFile->store('images', 'private');
+                $imageHashName = $imageFile->hashName();
+
+                $this->storageService->saveThumbnail($imageFile, $imageHashName);
+
 
                 $request->request->remove('icon');
-                $request->request->add(['icon_name' => $imageFile->hashName()]);
+                $request->request->add(['icon_name' => $imageHashName]);
             }
 
             if (!$ingredientCategory->update($request->all())) {
@@ -150,7 +159,7 @@ class IngredientCategoryController extends Controller
     {
         if ($ingredientCategory->delete()) {
 
-            (new StorageController)->removeImage($ingredientCategory->icon_name);
+            $this->storageService->removeThumbnail($ingredientCategory->icon_name);
 
             return response()->json([
                 'message' => 'Ingredient Category deleted successfully'

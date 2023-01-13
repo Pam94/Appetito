@@ -8,10 +8,9 @@ use App\Http\Controllers\AuthController as Auth;
 use App\Http\Controllers\IngredientController as IngredientV1;
 use App\Http\Controllers\IngredientCategoryController as IngredientCategoryV1;
 use App\Http\Controllers\CategoryController as CategoryV1;
-use App\Http\Controllers\ImageController as ImageV1;
 use App\Http\Controllers\RecipeController as RecipeV1;
 use App\Http\Controllers\PlanningController as PlanningV1;
-use App\Http\Controllers\StorageController;
+use App\Services\StorageService;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,5 +68,5 @@ Route::post('register', [Auth::class, 'register']);
 Route::post('login', [Auth::class, 'login']);
 Route::post('logout', [Auth::class, 'logout']);
 
-Route::get('images/{filename}', [StorageController::class, 'getImage']);
-Route::get('thumbnails/{filename}', [StorageController::class, 'getThumbnail']);
+Route::get('images/{filename}', [StorageService::class, 'getImage']);
+Route::get('thumbnails/{filename}', [StorageService::class, 'getThumbnail']);

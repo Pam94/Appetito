@@ -9,11 +9,15 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\NewRecipeRequest;
 use App\Http\Requests\UpdateRecipeRequest;
 use App\Models\CategoryRecipe;
-use App\Models\Image;
 use App\Models\IngredientRecipe;
+use App\Services\StorageService;
 
 class RecipeController extends Controller
 {
+
+    public function __construct(private StorageService $storageService)
+    {
+    }
     /**
      * Display a listing of the resource.
      *
@@ -59,7 +63,7 @@ class RecipeController extends Controller
                 $imageFile = $request->file('image');
                 $imageHashName = $imageFile->hashName();
 
-                (new StorageController)->saveImage($imageFile, $imageHashName);
+                $this->storageService->saveImage($imageFile, $imageHashName);
             }
 
             $recipe = Recipe::create([
@@ -159,12 +163,12 @@ class RecipeController extends Controller
                 ]);
 
                 if ($recipe->image !== null) {
-                    (new StorageController)->removeImage($recipe->image);
+                    $this->storageService->removeImage($recipe->image);
                 }
 
                 $imageFile = $request->file('image');
                 $imageHashName = $imageFile->hashName();
-                (new StorageController)->saveImage($imageFile, $imageHashName);
+                $this->storageService->saveImage($imageFile, $imageHashName);
 
                 $request->request->remove('image');
                 $request->request->add(['image_name' => $imageHashName]);
@@ -200,7 +204,8 @@ class RecipeController extends Controller
     {
         if ($recipe->delete()) {
 
-            (new StorageController)->removeImage($recipe->image);
+            $this->storageService->removeImage($recipe->image);
+            $this->storageService->removeThumbnail($recipe->image);
 
             return response()->json([
                 'message' => 'Recipe deleted successfully'

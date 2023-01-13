@@ -6,11 +6,17 @@ use App\Http\Requests\NewCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Services\StorageService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
+
+    public function __construct(private StorageService $storageService)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -51,12 +57,14 @@ class CategoryController extends Controller
                 ]);
 
                 $imageFile = $request->file('icon');
+                $imageHashName = $imageFile->hashName();
 
-                $imageFile->store('images', 'private');
+                $this->storageService->saveThumbnail($imageFile, $imageHashName);
+
 
                 Category::create([
                     'name' => $request->name,
-                    'icon_name' => $imageFile->hashName()
+                    'icon_name' => $imageHashName
                 ]);
             }
 
@@ -112,22 +120,17 @@ class CategoryController extends Controller
                     'icon' => 'mimes::jpeg,jpg,png'
                 ]);
 
-                (new StorageController)->removeImage($category->icon_name);
+                $this->storageService->removeThumbnail($category->icon_name);
 
                 $imageFile = $request->file('icon');
-                $imageFile->store('images', 'private');
+                $imageHashName = $imageFile->hashName();
+                $this->storageService->saveThumbnail($imageFile, $imageHashName);
 
                 $request->request->remove('icon');
-                $request->request->add(['icon_name' => $imageFile->hashName()]);
+                $request->request->add(['icon_name' => $imageHashName]);
+            }
 
-                if (!$category->update($request->all())) {
-
-                    return response()->json([
-                        'message' => 'Image not updated',
-                        'data' => $category
-                    ], 401);
-                }
-            } elseif (!$category->update($request->all())) {
+            if (!$category->update($request->all())) {
 
                 return response()->json([
                     'message' => 'Category not updated',
@@ -157,7 +160,7 @@ class CategoryController extends Controller
     {
         if ($category->delete()) {
 
-            (new StorageController)->removeImage($category->icon_name);
+            $this->storageService->removeThumbnail($category->icon_name);
 
             return response()->json([
                 'message' => 'Category deleted successfully'
