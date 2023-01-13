@@ -158,7 +158,7 @@ class RecipeController extends Controller
                     'image' => 'mimes::jpeg,jpg,png'
                 ]);
 
-                if ($recipe->image !== '') {
+                if ($recipe->image !== null) {
                     (new StorageController)->removeImage($recipe->image);
                 }
 

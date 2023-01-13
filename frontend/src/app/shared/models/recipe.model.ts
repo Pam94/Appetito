@@ -5,6 +5,7 @@ export interface newRecipe {
   instructions: string;
   favorite: boolean;
   url: string;
+  image_name: string;
 }
 
 export interface Pivot {
@@ -21,6 +22,7 @@ export interface Recipe {
   instructions: string;
   favorite: boolean;
   url: string;
+  image_name: string;
   pivot: Pivot;
   user_id: number;
   updated_at: Date;
