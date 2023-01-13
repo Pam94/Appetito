@@ -3,7 +3,6 @@ export interface User {
     surname: string;
     email: string;
     password: string;
-    rememberToken: boolean;
 }
 
 export interface UserRegister {
@@ -17,5 +16,4 @@ export interface UserRegister {
 export interface UserLogin {
     email: string;
     password: string;
-    rememberToken: boolean;
 }
