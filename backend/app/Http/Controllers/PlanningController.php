@@ -117,7 +117,38 @@ class PlanningController extends Controller
                     'message' => 'Invalid update Planning parameters',
                     'errors' => $validateUpdatePlanning->errors()
                 ], 401);
-            } elseif (!$planning->update($request->all())) {
+            }
+
+            foreach ($request->recipes as $recipe) {
+
+                $planningRecipe =
+                    PlanningRecipe::where('planning_id', $planning->id)
+                    ->where('recipe_id', $recipe['id'])
+                    ->where('meal', $recipe['meal'])
+                    ->first();
+
+                if ($planningRecipe) {
+
+                    if (!$planningRecipe->delete()) {
+                        return response()->json([
+                            'message' => "Planning Recipe not deleted"
+                        ], 401);
+                    }
+                } else {
+
+                    if (!PlanningRecipe::create([
+                        'planning_id' => $planning->id,
+                        'recipe_id' => $recipe['id'],
+                        'meal' => $recipe['meal']
+                    ])) {
+                        return response()->json([
+                            'message' => "Planning Recipe not created"
+                        ], 401);
+                    }
+                }
+            }
+
+            if (!$planning->update($request->all())) {
 
                 return response()->json([
                     'message' => 'Planning not updated',
