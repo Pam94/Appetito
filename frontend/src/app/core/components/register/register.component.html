@@ -1,15 +1,19 @@
 <div class="container-fluid">
-    <div class="row justify-content-center align-items-center">
+    <div class="row justify-content-between align-items-center">
         <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
             <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Registro</p>
 
             <form class="mx-1 mx-md-4" [formGroup]="registerForm" (ngSubmit)="register()">
 
-                <div class="d-flex flex-row align-items-center mb-4">
+                <div class="d-flex flex-row align-items-center">
                     <div class="form-outline flex-fill mb-0">
-                        <label class="form-label" for="name">Nombre</label>
-                        <input type="text" id="name" class="form-control" formControlName="name" />
+
+                        <mdb-form-control class="mb-4">
+                            <input mdbInput type="text" id="name" class="form-control" formControlName="name" />
+                            <label mdbLabel class="form-label" for="name">Nombre</label>
+                        </mdb-form-control>
+
                         <div *ngIf="name && name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
                             <div *ngIf="name.hasError('required')">
                                 Nombre obligatorio
@@ -17,10 +21,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex flex-row align-items-center mb-4">
+                <div class="d-flex flex-row align-items-center">
                     <div class="form-outline flex-fill mb-0">
-                        <label class="form-label" for="surname">Apellidos</label>
-                        <input type="text" id="surname" class="form-control" formControlName="surname" />
+
+                        <mdb-form-control class="mb-4">
+                            <input mdbInput type="text" id="surname" class="form-control" formControlName="surname" />
+                            <label mdbLabel class="form-label" for="surname">Apellidos</label>
+                        </mdb-form-control>
+
                         <div *ngIf="surname && surname.invalid && (surname.dirty || surname.touched)"
                             class="alert alert-danger">
                             <div *ngIf="surname.hasError('required')">
@@ -30,11 +38,14 @@
                     </div>
                 </div>
 
-                <div class="d-flex flex-row align-items-center mb-4">
+                <div class="d-flex flex-row align-items-center">
                     <div class="form-outline flex-fill mb-0">
 
-                        <label class="form-label" for="email">Email</label>
-                        <input type="email" id="email" class="form-control" formControlName="email" />
+                        <mdb-form-control class="mb-4">
+                            <input mdbInput type="email" id="email" class="form-control" formControlName="email" />
+                            <label mdbLabel class="form-label" for="email">Email</label>
+                        </mdb-form-control>
+
                         <div *ngIf="email && email.invalid && (email.dirty || email.touched)"
                             class="alert alert-danger">
                             <div *ngIf="email.hasError('required')">
@@ -47,12 +58,15 @@
                     </div>
                 </div>
 
-                <div class="d-flex flex-row align-items-center mb-4">
+                <div class="d-flex flex-row align-items-center">
                     <div class="form-outline flex-fill mb-0">
 
-                        <label class="form-label" for="password">Contraseña</label>
-                        <input type="password" id="password" class="form-control" formControlName="password"
-                            autocomplete="on" />
+                        <mdb-form-control class="mb-4">
+                            <input mdbInput type="password" id="password" class="form-control"
+                                formControlName="password" autocomplete="on" />
+                            <label mdbLabel class="form-label" for="password">Contraseña</label>
+                        </mdb-form-control>
+
                         <div *ngIf="password && password.invalid && (password.dirty || password.touched)"
                             class="alert alert-danger">
                             <div *ngIf="password.hasError('required')">
@@ -65,11 +79,15 @@
                     </div>
                 </div>
 
-                <div class="d-flex flex-row align-items-center mb-4">
+                <div class="d-flex flex-row align-items-center">
                     <div class="form-outline flex-fill mb-0">
-                        <label class="form-label" for="repeat-password">Repite la contraseña</label>
-                        <input type="password" id="repeat-password" class="form-control"
-                            formControlName="repeatPassword" autocomplete="on" />
+
+                        <mdb-form-control class="mb-4">
+                            <input mdbInput type="password" id="repeat-password" class="form-control"
+                                formControlName="repeatPassword" autocomplete="on" />
+                            <label mdbLabel class="form-label" for="repeat-password">Repite la contraseña</label>
+                        </mdb-form-control>
+
                         <div *ngIf="repeatPassword && repeatPassword.invalid && (repeatPassword.dirty || repeatPassword.touched)"
                             class="alert alert-danger">
                             <div *ngIf="repeatPassword.hasError('required')">

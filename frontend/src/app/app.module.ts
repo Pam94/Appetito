@@ -10,7 +10,6 @@ import { ShoplistModule } from './features/shoplist/shoplist.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
-import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 
 @NgModule({
   declarations: [
@@ -23,8 +22,6 @@ import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
     PlanningModule,
     RecipeModule,
     ShoplistModule,
-
-    MdbCheckboxModule,
 
     AppRoutingModule,
   ],

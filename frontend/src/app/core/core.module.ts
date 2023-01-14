@@ -10,6 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ApiHttpService } from './services/api-http.service';
 import { CoreRoutingModule } from './core-routing.module';
 
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+
 @NgModule({
   providers: [
     ApiHttpService
@@ -23,6 +25,9 @@ import { CoreRoutingModule } from './core-routing.module';
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
+
+    MdbFormsModule,
+
     CoreRoutingModule
   ]
 })

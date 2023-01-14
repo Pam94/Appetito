@@ -6,11 +6,14 @@
 
             <form class="mx-1 mx-md-4" [formGroup]="loginForm" (ngSubmit)="login()">
 
-                <div class="d-flex flex-row align-items-center mb-4">
+                <div class="d-flex flex-row align-items-center">
                     <div class="form-outline flex-fill mb-0">
 
-                        <label class="form-label" for="email">Email</label>
-                        <input type="email" id="email" class="form-control" formControlName="email" />
+                        <mdb-form-control class="mb-4">
+                            <input mdbInput type="email" id="email" class="form-control" formControlName="email" />
+                            <label mdbLabel class="form-label" for="email">Email</label>
+                        </mdb-form-control>
+
                         <div *ngIf="email && email.invalid && (email.dirty || email.touched)"
                             class="alert alert-danger">
                             <div *ngIf="email.hasError('required')">
@@ -23,12 +26,15 @@
                     </div>
                 </div>
 
-                <div class="d-flex flex-row align-items-center mb-4">
+                <div class="d-flex flex-row align-items-center">
                     <div class="form-outline flex-fill mb-0">
 
-                        <label class="form-label" for="password">Contraseña</label>
-                        <input type="password" id="password" class="form-control" formControlName="password"
-                            autocomplete="on" />
+                        <mdb-form-control class="mb-4">
+                            <input mdbInput type="password" id="password" class="form-control"
+                                formControlName="password" autocomplete="on" />
+                            <label mdbLabel class="form-label" for="password">Contraseña</label>
+                        </mdb-form-control>
+
                         <div *ngIf="password && password.invalid && (password.dirty || password.touched)"
                             class="alert alert-danger">
                             <div *ngIf="password.hasError('required')">
