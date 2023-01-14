@@ -4,21 +4,21 @@
 
             <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Planificación</p>
 
-            <div id="dayTab">
-                <ul class="nav justify-content-center">
-                    <li class="nav-item">
-                        <a class="nav-link" role="button" (click)="previousDay()">
+            <nav id="dayTab">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" role="button" (click)="previousDay()">
                             <i class=" bi bi-arrow-left"></i>
                         </a>
                     </li>
-                    <li class="nav-item">{{dateString}}</li>
-                    <li class="nav-item">
-                        <a class="nav-link" role="button" (click)="nextDay()">
+                    <li class="page-item">{{dateString}}</li>
+                    <li class="page-item">
+                        <a class="page-link" role="button" (click)="nextDay()">
                             <i class="bi bi-arrow-right"></i>
                         </a>
                     </li>
                 </ul>
-            </div>
+            </nav>
 
             <div class="row row-cols-1 row-cols-md-2 g-4">
                 <a *ngFor="let recipe of recipes" class="animate__animated animate__bounce animate__fadeIn">
@@ -37,7 +37,7 @@
                                             </div>
                                             <div class="col-auto">
                                                 <a class="btn btn-danger" role="button"
-                                                    (click)="deleteRecipe(recipe.id)">
+                                                    (click)="deleteRecipeFromPlan(recipe)">
                                                     <i class="bi bi-trash-fill"></i></a>
                                             </div>
                                         </div>
@@ -51,13 +51,10 @@
         </div>
     </div>
 </div>
-<div class="fixed-bottom">
-    <div class="row justify-content-end">
-        <div class="col-3 mb-2 me-2">
-            <button class="btn btn-primary" role="button" (click)="planRecipe()">
-                <i class="bi bi-plus-circle-fill"></i>
-            </button>
-        </div>
-    </div>
-    <app-main-nav></app-main-nav>
+<div class="fixed-action-btn mb-5">
+    <a class="btn btn-floating text-black btn-lg" role="button" [routerLink]="['/planRecipe']"
+        routerLinkActive="router-link-active">
+        <i class="bi bi-plus-circle-fill"></i>
+    </a>
 </div>
+<app-main-nav></app-main-nav>
