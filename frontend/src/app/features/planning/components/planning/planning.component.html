@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid overflow-auto">
     <div class="row justify-content-center align-items-center">
         <div class="col-md-10 col-lg-6 col-xl-5">
 
@@ -21,18 +21,26 @@
             </div>
 
             <div class="row row-cols-1 row-cols-md-2 g-4">
-                <a *ngFor="let recipe of recipes" [routerLink]="['/recipe', recipe.id]"
-                    class="animate__animated animate__bounce animate__fadeIn">
+                <a *ngFor="let recipe of recipes" class="animate__animated animate__bounce animate__fadeIn">
                     <div class="col">
                         <div class="card">
                             <div class="row g-0">
                                 <div class="col">
-                                    <img src="{{imagePath}}{{recipe.image_name}}" class="card-img-top">
+                                    <img src="{{imagePath}}{{recipe.image_name}}" class="img-fluid rounded-start">
                                 </div>
                                 <div class="col-7">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{recipe.name}}</h5>
-                                        <p class="card-text">{{recipe.pivot.meal}}</p>
+                                    <div class="card-body justify-content-around">
+                                        <div class="row justify-content-between">
+                                            <div class="col-auto me-auto">
+                                                <h5 class="card-title">{{recipe.name}}</h5>
+                                                <p class="card-text">{{recipe.pivot.meal}}</p>
+                                            </div>
+                                            <div class="col-auto">
+                                                <a class="btn btn-danger" role="button"
+                                                    (click)="deleteRecipe(recipe.id)">
+                                                    <i class="bi bi-trash-fill"></i></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -43,4 +51,13 @@
         </div>
     </div>
 </div>
-<app-main-nav></app-main-nav>
+<div class="fixed-bottom">
+    <div class="row justify-content-end">
+        <div class="col-3 mb-2 me-2">
+            <button class="btn btn-primary" role="button" (click)="planRecipe()">
+                <i class="bi bi-plus-circle-fill"></i>
+            </button>
+        </div>
+    </div>
+    <app-main-nav></app-main-nav>
+</div>

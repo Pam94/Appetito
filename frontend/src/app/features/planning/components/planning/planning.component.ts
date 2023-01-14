@@ -72,6 +72,12 @@ export class PlanningComponent {
       });
   }
 
+  deleteRecipe($recipeId: number) {
+    console.log($recipeId);
+  }
+
+  planRecipe() { }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       console.error('Client-side or network error ocurred', error.error);
