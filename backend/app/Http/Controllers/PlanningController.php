@@ -119,41 +119,30 @@ class PlanningController extends Controller
                 ], 401);
             }
 
-            foreach ($request->recipes as $recipe) {
+            $planningRecipe =
+                PlanningRecipe::where('planning_id', $planning->id)
+                ->where('recipe_id', $request->recipe_id)
+                ->where('meal', $request->recipe_meal)
+                ->first();
 
-                $planningRecipe =
-                    PlanningRecipe::where('planning_id', $planning->id)
-                    ->where('recipe_id', $recipe['id'])
-                    ->where('meal', $recipe['meal'])
-                    ->first();
+            if ($planningRecipe) {
 
-                if ($planningRecipe) {
-
-                    if (!$planningRecipe->delete()) {
-                        return response()->json([
-                            'message' => "Planning Recipe not deleted"
-                        ], 401);
-                    }
-                } else {
-
-                    if (!PlanningRecipe::create([
-                        'planning_id' => $planning->id,
-                        'recipe_id' => $recipe['id'],
-                        'meal' => $recipe['meal']
-                    ])) {
-                        return response()->json([
-                            'message' => "Planning Recipe not created"
-                        ], 401);
-                    }
+                if (!$planningRecipe->delete()) {
+                    return response()->json([
+                        'message' => "Planning Recipe not deleted"
+                    ], 401);
                 }
-            }
+            } else {
 
-            if (!$planning->update($request->all())) {
-
-                return response()->json([
-                    'message' => 'Planning not updated',
-                    'data' => $planning
-                ], 401);
+                if (!PlanningRecipe::create([
+                    'planning_id' => $planning->id,
+                    'recipe_id' => $request->recipe_id,
+                    'meal' => $request->recipe_meal
+                ])) {
+                    return response()->json([
+                        'message' => "Planning Recipe not created"
+                    ], 401);
+                }
             }
 
             return response()->json([

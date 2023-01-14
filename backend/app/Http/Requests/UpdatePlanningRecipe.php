@@ -24,10 +24,8 @@ class UpdatePlanningRecipe extends FormRequest
     public function rules()
     {
         return [
-            'date' => 'sometimes|date',
-            'recipes' => 'present|array',
-            'recipes.*.id' => 'required|numeric',
-            'recipes.*.meal' => 'required|in:Desayuno,Comida,Cena'
+            'recipe_id' => 'required|numeric',
+            'recipe_meal' => 'required|in:Desayuno,Comida,Cena'
         ];
     }
 }

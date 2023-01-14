@@ -1,9 +1,7 @@
 import { formatDate } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { catchError, EMPTY } from 'rxjs';
-import { ApiHttpService } from 'src/app/core/services/api-http.service';
 import { Constants } from 'src/app/shared/constants';
 import { Recipe } from 'src/app/shared/models/recipe.model';
 import { PlanningService } from '../../services/planning.service';
@@ -72,11 +70,25 @@ export class PlanningComponent {
       });
   }
 
-  deleteRecipe($recipeId: number) {
-    console.log($recipeId);
-  }
+  deleteRecipeFromPlan(recipe: Recipe) {
+    var planningDate = formatDate(this.date, 'yyyy-MM-dd', 'en');
+    var planning = {
+      'date': planningDate,
+      'recipe_id': recipe.id,
+      'recipe_meal': recipe.pivot.meal
+    };
+    this.planningService.deleteRecipeFromPlan(planning)
+      .pipe(catchError(this.handleError))
+      .subscribe();
 
-  planRecipe() { }
+    this.planningService.getPlanningByDate(planningDate)
+      .pipe(catchError(this.handleError))
+      .subscribe({
+        next: (data) => {
+          this.recipes = data.data.recipes;
+        }
+      });
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
