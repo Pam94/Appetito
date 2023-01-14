@@ -5,11 +5,13 @@ import { PlanningRoutingModule } from './planning-routing.module';
 
 import { PlanningComponent } from './components/planning/planning.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { PlanRecipeComponent } from './components/plan-recipe/plan-recipe.component';
 
 
 @NgModule({
   declarations: [
-    PlanningComponent
+    PlanningComponent,
+    PlanRecipeComponent
   ],
   imports: [
     CommonModule,
