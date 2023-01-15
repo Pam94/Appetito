@@ -1,8 +1,8 @@
-import { Recipe } from "./recipe.model";
+import { PlanningRecipe } from "./recipe.model";
 
 export interface Planning {
   date: string;
-  recipes: Recipe[];
+  recipes: PlanningRecipe[];
 }
 
 export interface UpdatePlanning {

@@ -70,3 +70,9 @@ Route::post('logout', [Auth::class, 'logout']);
 
 Route::get('images/{filename}', [StorageService::class, 'getImage']);
 Route::get('thumbnails/{filename}', [StorageService::class, 'getThumbnail']);
+
+Route::fallback(function () {
+    return response()->json([
+        'message' => 'Page Not Found'
+    ], 404);
+});

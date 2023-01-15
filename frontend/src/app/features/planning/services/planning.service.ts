@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiHttpService } from 'src/app/core/services/api-http.service';
 import { Constants } from 'src/app/shared/constants';
-import { Planning, UpdatePlanning } from 'src/app/shared/models/planning.model';
+import { UpdatePlanning } from 'src/app/shared/models/planning.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,11 @@ export class PlanningService {
     return this.apiHttpService.get(this.constants.API_PLANNING + '/' + $date);
   }
 
-  deleteRecipeFromPlan($planning: UpdatePlanning): Observable<any> {
+  updatePlanning($planning: UpdatePlanning): Observable<any> {
     return this.apiHttpService.put(this.constants.API_PLANNING + '/' + $planning.date, $planning);
+  }
+
+  createPlanOrUpdate($planning: UpdatePlanning): Observable<any> {
+    return this.apiHttpService.post(this.constants.API_PLANNING, $planning);
   }
 }

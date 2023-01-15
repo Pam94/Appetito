@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { catchError, EMPTY } from 'rxjs';
 import { Constants } from 'src/app/shared/constants';
-import { Recipe } from 'src/app/shared/models/recipe.model';
+import { PlanningRecipe } from 'src/app/shared/models/recipe.model';
 import { PlanningService } from '../../services/planning.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { PlanningService } from '../../services/planning.service';
   styleUrls: ['./planning.component.scss']
 })
 export class PlanningComponent {
-  recipes!: Recipe[];
+  recipes!: PlanningRecipe[];
   date!: Date;
   dateString: string;
   imagePath: string = this.constants.API_THUMBNAILS_STORAGE;
@@ -70,14 +70,14 @@ export class PlanningComponent {
       });
   }
 
-  deleteRecipeFromPlan(recipe: Recipe) {
+  deleteRecipeFromPlan(recipe: PlanningRecipe) {
     var planningDate = formatDate(this.date, 'yyyy-MM-dd', 'en');
     var planning = {
       'date': planningDate,
       'recipe_id': recipe.id,
       'recipe_meal': recipe.pivot.meal
     };
-    this.planningService.deleteRecipeFromPlan(planning)
+    this.planningService.updatePlanning(planning)
       .pipe(catchError(this.handleError))
       .subscribe();
 

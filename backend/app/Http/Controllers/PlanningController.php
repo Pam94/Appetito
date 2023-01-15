@@ -49,25 +49,64 @@ class PlanningController extends Controller
                 ], 401);
             }
 
-            $planning = Planning::create([
-                'date' => $request->date,
-                'user_id' => $autenticatedUserId
-            ]);
+            $planningFound = Planning::where('date', $request->date)->first();
 
-            $planningId = $planning->id;
+            if ($planningFound) {
+                $planningRecipe =
+                    PlanningRecipe::where('planning_id', $planningFound->id)
+                    ->where('recipe_id', $request->recipe_id)
+                    ->where('meal', $request->recipe_meal)
+                    ->first();
 
-            foreach ($request->recipes as $recipe) {
+                if ($planningRecipe) {
 
-                PlanningRecipe::create([
-                    'planning_id' => $planningId,
-                    'recipe_id' => $recipe['id'],
-                    'meal' => $recipe['meal']
+                    if (!$planningRecipe->delete()) {
+                        return response()->json([
+                            'message' => "Planning Recipe not deleted"
+                        ], 401);
+                    }
+                } else {
+
+                    if (!PlanningRecipe::create([
+                        'planning_id' => $planningFound->id,
+                        'recipe_id' => $request->recipe_id,
+                        'meal' => $request->recipe_meal
+                    ])) {
+                        return response()->json([
+                            'message' => "Planning Recipe not created"
+                        ], 401);
+                    }
+                }
+
+                return response()->json([
+                    'message' => 'Planning Updated Successfully',
+                    'data' => $planningFound
+                ], 200);
+            } else {
+                $planning = Planning::create([
+                    'date' => $request->date,
+                    'user_id' => $autenticatedUserId
                 ]);
-            };
 
-            return response()->json([
-                'message' => 'Planning Created Successfully'
-            ], 200);
+                if (!$planning) {
+                    return response()->json([
+                        'message' => "Planning not created"
+                    ], 401);
+                }
+
+                if (!PlanningRecipe::create([
+                    'planning_id' => $planning->id,
+                    'recipe_id' => $request->recipe_id,
+                    'meal' => $request->recipe_meal
+                ])) {
+                    return response()->json([
+                        'message' => "Planning not created"
+                    ], 401);
+                }
+                return response()->json([
+                    'message' => 'Planning Created Successfully'
+                ], 200);
+            }
         } catch (\Throwable $throwable) {
 
             return response()->json([
@@ -84,14 +123,21 @@ class PlanningController extends Controller
      */
     public function show(Planning $planning)
     {
-        $autenticatedUserId = Auth::guard('sanctum')->id();
+        try {
+            $autenticatedUserId = Auth::guard('sanctum')->id();
 
-        if ($planning && $planning->user_id === $autenticatedUserId) {
-            return new PlanningResource($planning);
-        } else {
+            if ($planning && $planning->user_id === $autenticatedUserId) {
+                return new PlanningResource($planning);
+            } else {
+                return response()->json([
+                    'message' => 'Planning not found'
+                ], 404);
+            }
+        } catch (\Throwable $throwable) {
+
             return response()->json([
-                'message' => 'Planning not found'
-            ], 404);
+                'message' => $throwable->getMessage()
+            ], 500);
         }
     }
 
@@ -117,6 +163,12 @@ class PlanningController extends Controller
                     'message' => 'Invalid update Planning parameters',
                     'errors' => $validateUpdatePlanning->errors()
                 ], 401);
+            }
+
+            if (!$planning) {
+                return response()->json([
+                    'message' => 'Planning not found'
+                ], 404);
             }
 
             $planningRecipe =

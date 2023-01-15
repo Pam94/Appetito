@@ -30,17 +30,11 @@
                                 </div>
                                 <div class="col-7">
                                     <div class="card-body justify-content-around">
-                                        <div class="row justify-content-between">
-                                            <div class="col-auto me-auto">
-                                                <h5 class="card-title">{{recipe.name}}</h5>
-                                                <p class="card-text">{{recipe.pivot.meal}}</p>
-                                            </div>
-                                            <div class="col-auto">
-                                                <a class="btn btn-danger" role="button"
-                                                    (click)="deleteRecipeFromPlan(recipe)">
-                                                    <i class="bi bi-trash-fill"></i></a>
-                                            </div>
-                                        </div>
+                                        <h5 class="card-title">{{recipe.name}}</h5>
+                                        <p class="card-text">{{recipe.pivot.meal}}</p>
+                                        <a class="btn btn-danger" role="button" (click)="deleteRecipeFromPlan(recipe)">
+                                            <i class="bi bi-trash-fill"></i></a>
+
                                     </div>
                                 </div>
                             </div>
@@ -52,9 +46,12 @@
     </div>
 </div>
 <div class="fixed-action-btn mb-5">
-    <a class="btn btn-floating text-black btn-lg" role="button" [routerLink]="['/planRecipe']"
-        routerLinkActive="router-link-active">
-        <i class="bi bi-plus-circle-fill"></i>
+    <a class="btn btn-floating bg-transparent text-dark" data-bs-toggle="modal" data-bs-target="#newPlanningModal"
+        role="button">
+        <!--[routerLink]="['/planRecipe']"
+        routerLinkActive="router-link-active">-->
+        <h1><i class="bi bi-plus-circle-fill"></i></h1>
     </a>
 </div>
+<app-plan-recipe></app-plan-recipe>
 <app-main-nav></app-main-nav>

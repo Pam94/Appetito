@@ -25,9 +25,8 @@ class NewPlanningRequest extends FormRequest
     {
         return [
             'date' => 'required|date',
-            'recipes' => 'present|array',
-            'recipes.*.id' => 'required|numeric',
-            'recipes.*.meal' => 'required|in:Desayuno,Comida,Cena'
+            'recipe_id' => 'required|numeric',
+            'recipe_meal' => 'required|in:Desayuno,Comida,Cena'
         ];
     }
 }

@@ -6,6 +6,7 @@ import { PlanningRoutingModule } from './planning-routing.module';
 import { PlanningComponent } from './components/planning/planning.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PlanRecipeComponent } from './components/plan-recipe/plan-recipe.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -16,6 +17,8 @@ import { PlanRecipeComponent } from './components/plan-recipe/plan-recipe.compon
   imports: [
     CommonModule,
     SharedModule,
+    ReactiveFormsModule,
+
     PlanningRoutingModule
   ]
 })

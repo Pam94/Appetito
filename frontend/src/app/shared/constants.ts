@@ -10,4 +10,6 @@ export class Constants {
     public readonly API_THUMBNAILS_STORAGE: string = this.API_ENDPOINT + 'thumbnails/';
 
     public readonly API_PLANNING: string = this.API_ENDPOINT_VERSION + 'plannings';
+
+    public readonly API_RECIPES: string = this.API_ENDPOINT_VERSION + 'recipes';
 }
