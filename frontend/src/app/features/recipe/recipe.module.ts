@@ -7,7 +7,8 @@ import { RecipesComponent } from './components/recipes/recipes.component';
 import { RecipeComponent } from './components/recipe/recipe.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NewRecipeComponent } from './components/new-recipe/new-recipe.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,9 @@ import { NewRecipeComponent } from './components/new-recipe/new-recipe.component
   imports: [
     CommonModule,
     SharedModule,
+    ReactiveFormsModule,
+
+    MdbFormsModule,
 
     RecipeRoutingModule
   ]

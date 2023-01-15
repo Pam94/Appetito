@@ -1,13 +1,3 @@
-export interface newRecipe {
-  name: string;
-  time: number;
-  portions: number;
-  instructions: string;
-  favorite: boolean;
-  url: string;
-  image_name: string;
-}
-
 export interface PlanningRecipePivot {
   planning_id: number;
   recipe_id: number;
@@ -72,4 +62,21 @@ export interface Recipe {
   image_name: string;
   ingredients: RecipeIngredient[],
   categories: RecipeCategory[],
+}
+
+export interface NewRecipeIngredient {
+  id: number;
+  grams: number;
+}
+
+export interface NewRecipe {
+  name: string;
+  time: number;
+  portions: number;
+  instructions: string;
+  favorite: boolean;
+  url: string;
+  image: File;
+  categories: RecipeCategory[],
+  ingredients: NewRecipeIngredient[]
 }

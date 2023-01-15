@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiHttpService } from 'src/app/core/services/api-http.service';
 import { Constants } from '../constants';
+import { NewRecipe } from '../models/recipe.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +20,9 @@ export class RecipeService {
 
   deleteRecipe(recipeId: number): Observable<any> {
     return this.apiHttpService.delete(this.constants.API_RECIPES + '/' + recipeId);
+  }
+
+  createRecipe(recipe: NewRecipe): Observable<any> {
+    return this.apiHttpService.post(this.constants.API_RECIPES, recipe);
   }
 }

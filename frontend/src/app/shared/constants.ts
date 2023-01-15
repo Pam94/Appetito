@@ -12,4 +12,8 @@ export class Constants {
     public readonly API_PLANNING: string = this.API_ENDPOINT_VERSION + 'plannings';
 
     public readonly API_RECIPES: string = this.API_ENDPOINT_VERSION + 'recipes';
+
+    public readonly API_RECIPE_CATEGORIES: string = this.API_ENDPOINT_VERSION + 'categories';
+
+    public readonly API_RECIPE_INGREDIENTS: string = this.API_ENDPOINT_VERSION + 'ingredients';
 }

@@ -11,70 +11,116 @@
 
                         <form class="mx-1 mx-md-4" [formGroup]="recipeForm" (ngSubmit)="createRecipe()">
 
-                            <div class="d-flex flex-row align-items-center mb-4">
+                            <div class="d-flex flex-row align-items-center">
                                 <div class="form-outline flex-fill mb-0">
 
-                                    <label class="form-label" for="name">Nombre</label>
-                                    <input type="text" id="name" class="form-control" formControlName="name" />
+                                    <mdb-form-control class="mb-4">
+                                        <input mdbInput type="text" id="name" class="form-control"
+                                            formControlName="name" />
+                                        <label mdbLabel class="form-label" for="name">Nombre</label>
+                                    </mdb-form-control>
 
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-row align-items-center mb-4">
-                                <div class="form-outline flex-fill mb-0">
-
-                                    <label class="form-label" for="time">Tiempo (mins)</label>
-                                    <input type="number" id="time" class="form-control" formControlName="time" />
-
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-row align-items-center mb-4">
-                                <div class="form-outline flex-fill mb-0">
-
-                                    <label class="form-label" for="portions">Porciones</label>
-                                    <input type="number" id="portions" class="form-control" formControlName="portions"
-                                        rows="3" />
-
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-row align-items-center mb-4">
-                                <div class="form-outline flex-fill mb-0">
-
-                                    <label class="form-label" for="instructions">Instrucciones</label>
-                                    <textarea type="text" id="instructions" class="form-control"
-                                        formControlName="instructions" />
-
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-row align-items-center mb-4">
-                                <div class="form-outline flex-fill mb-0">
-
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="favorite"
-                                            formControlName="favorite">
-                                        <label class="form-check-label" for="favorite">
-                                            Favorito
-                                        </label>
+                                    <div *ngIf="name && name.invalid && (name.dirty || name.touched)"
+                                        class="alert alert-danger">
+                                        <div *ngIf="name.hasError('required')">
+                                            Nombre obligatorio
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
+
+                            <div class="d-flex flex-row align-items-center">
+                                <div class="form-outline flex-fill mb-0">
+
+                                    <mdb-form-control class="mb-4">
+
+                                        <input mdbInput type="number" id="time" class="form-control"
+                                            formControlName="time" />
+                                        <label mdbLabel class="form-label" for="time">Tiempo (mins)</label>
+                                    </mdb-form-control>
+
+                                    <div *ngIf="time && time.invalid && (time.dirty || time.touched)"
+                                        class="alert alert-danger">
+                                        <div *ngIf="time.hasError('required')">
+                                            Tiempo obligatorio
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-row align-items-center">
+                                <div class="form-outline flex-fill mb-0">
+
+                                    <mdb-form-control class="mb-4">
+
+                                        <input mdbInput type="number" id="portions" class="form-control"
+                                            formControlName="portions" />
+                                        <label mdbLabel class="form-label" for="portions">Porciones</label>
+                                    </mdb-form-control>
+
+                                    <div *ngIf="portions && portions.invalid && (portions.dirty || portions.touched)"
+                                        class="alert alert-danger">
+                                        <div *ngIf="portions.hasError('required')">
+                                            Porciones obligatorias
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-row align-items-center">
+                                <div class="form-outline flex-fill mb-0">
+
+                                    <mdb-form-control class="mb-4">
+
+                                        <textarea mdbInput type="text" id="instructions" class="form-control"
+                                            formControlName="instructions" rows="3"></textarea>
+                                        <label mdbLabel class="form-label" for="instructions">Instrucciones</label>
+                                    </mdb-form-control>
+
+                                    <div *ngIf="instructions && instructions.invalid && (instructions.dirty || instructions.touched)"
+                                        class="alert alert-danger">
+                                        <div *ngIf="instructions.hasError('required')">
+                                            Instrucciones obligatorias
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-row align-items-center">
+                                <div class="form-outline flex-fill mb-0">
+
+                                    <mdb-form-control class="mb-4">
+                                        <div class="form-check">
+                                            <input mdbInput class="form-check-input" type="checkbox" value=""
+                                                id="favorite" formControlName="favorite">
+                                            <label mdbLabel class="form-check-label" for="favorite">
+                                                Favorito
+                                            </label>
+                                        </div>
+                                    </mdb-form-control>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-row align-items-center">
+                                <div class="form-outline flex-fill mb-0">
+
+                                    <mdb-form-control class="mb-4">
+
+                                        <input mdbInput type="url" id="url" class="form-control" formControlName="url">
+                                        <label mdbLabel class="form-label" for="url">URL</label>
+                                    </mdb-form-control>
+                                </div>
+                            </div>
+
 
                             <div class="d-flex flex-row align-items-center mb-4">
                                 <div class="form-outline flex-fill mb-0">
 
-                                    <label class="form-label" for="url">URL</label>
-                                    <input type="url" id="url" class="form-control" formControlName="url">
-                                </div>
-                            </div>
-
-
-                            <div class="d-flex flex-row align-items-center mb-4">
-                                <div class="form-outline flex-fill mb-0">
-
-                                    <div class="mb-3">
+                                    <div class="mb-4">
                                         <label for="image" class="form-label">Sube una imagen</label>
                                         <input class="form-control" type="file" id="image" formControlName="image">
                                     </div>
@@ -91,10 +137,93 @@
                                         </option>
                                     </select>
 
+                                    <div *ngIf="categorySelector && categorySelector.invalid && (categorySelector.dirty || categorySelector.touched)"
+                                        class="alert alert-danger">
+                                        <div *ngIf="categorySelector.hasError('required')">
+                                            Categoria/s obligatorias
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 
-                            <!-- TODO INGREDIENTES ALIASES -->
+                            <!-- EXISTING INGREDIENTS -->
+                            <div class="d-flex flex-row align-items-center mb-4">
+                                <div class="form-outline flex-fill mb-0">
+                                    <h2>Seleccionar Ingredientes</h2>
+                                    <div class="row mb-4">
+                                        <button class="col btn btn-primary" type="button"
+                                            (click)="addSelectIngredientForm()">Añadir</button>
+                                    </div>
+
+                                    <div formArrayName="ingredientsArray">
+                                        <div *ngFor="let ingredientForm of ingredientsArray['controls']; let i=index">
+                                            <div class="row mb-4" formGroupName="{{i}}">
+                                                <select class="col form-select" formControlName="ingredientSelector">
+                                                    <option [ngValue]="null" disabled>Escoge el ingrediente
+                                                    </option>
+                                                    <option *ngFor="let ingredient of ingredients"
+                                                        [ngValue]="ingredient.id">
+                                                        {{ingredient.name}}
+                                                    </option>
+                                                </select>
+                                                <mdb-form-control class="col">
+                                                    <input mdbInput type="number" id="gramsSelect{{i}}"
+                                                        class="form-control" formControlName="gramsSelect">
+                                                    <label mdbLabel class="form-label"
+                                                        for="gramsSelect{{i}}">Gramos</label>
+                                                </mdb-form-control>
+                                                <a class="col btn btn-danger" role="button"
+                                                    (click)="removeSelectIngredientForm(i)">
+                                                    <i class="bi bi-trash-fill"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- NEW INGREDIENTS -->
+                            <div class="d-flex flex-row align-items-center mb-4">
+                                <div class="form-outline flex-fill mb-0">
+                                    <h2>Crear Ingredientes</h2>
+                                    <div class="row mb-4">
+                                        <button class="col btn btn-primary" type="button"
+                                            (click)="addCreateIngredientForm()">Crear</button>
+                                    </div>
+
+                                    <div formArrayName="newIngredientsArray">
+                                        <div
+                                            *ngFor="let ingredientForm of newIngredientsArray['controls']; let i=index">
+                                            <div class="row mb-4" formGroupName="{{i}}">
+                                                <mdb-form-control class="col">
+                                                    <input mdbInput type="text" id="ingredientName{{i}}"
+                                                        class="form-control" formControlName="ingredientName">
+                                                    <label mdbLabel class="form-label"
+                                                        for="ingredientName{{i}}">Nombre</label>
+                                                </mdb-form-control>
+                                                <select class="col form-select" formControlName="ingredientCategory">
+                                                    <option [ngValue]="null" disabled>Escoge la categoría
+                                                    </option>
+                                                    <option *ngFor="let ingredientCategory of ingredientCategories"
+                                                        [ngValue]="ingredientCategory.id">
+                                                        {{ingredientCategory.name}}
+                                                    </option>
+                                                </select>
+                                                <mdb-form-control class="col">
+                                                    <input mdbInput type="number" id="gramsCreate{{i}}"
+                                                        class="form-control" formControlName="gramsCreate">
+                                                    <label mdbLabel class="form-label"
+                                                        for="gramsCreate{{i}}">Gramos</label>
+                                                </mdb-form-control>
+                                                <a class="col btn btn-danger" role="button"
+                                                    (click)="removeCreateIngredientForm(i)">
+                                                    <i class="bi bi-trash-fill"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                 <button type="submit" class="btn btn-primary btn-lg" data-bs-dismiss="modal"

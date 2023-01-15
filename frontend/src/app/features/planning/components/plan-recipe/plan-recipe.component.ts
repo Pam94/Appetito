@@ -23,13 +23,7 @@ export class PlanRecipeComponent {
     private recipeService: RecipeService,
     private planningService: PlanningService) {
 
-    this.recipeService.getRecipes()
-      .pipe(catchError(this.handleError))
-      .subscribe({
-        next: (data) => {
-          this.recipes = data.data;
-        }
-      });
+    this.loadRecipes();
 
     this.planningForm = this.fb.group({
       date: ['', Validators.required],
@@ -54,6 +48,26 @@ export class PlanRecipeComponent {
     this.planningService.createPlanOrUpdate(planning)
       .pipe(catchError(this.handleError))
       .subscribe();
+
+    this.loadRecipes();
+  }
+
+  cancelPlanning() {
+    this.planningForm.reset();
+
+    this.loadRecipes();
+
+  }
+
+  loadRecipes() {
+    this.recipeService.getRecipes()
+      .pipe(catchError(this.handleError))
+      .subscribe({
+        next: (data) => {
+          this.recipes = data.data;
+        }
+      });
+
   }
 
   private handleError(error: HttpErrorResponse) {
