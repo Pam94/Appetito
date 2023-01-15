@@ -16,4 +16,8 @@ export class RecipeService {
   getRecipes(): Observable<any> {
     return this.apiHttpService.get(this.constants.API_RECIPES);
   }
+
+  deleteRecipe(recipeId: number): Observable<any> {
+    return this.apiHttpService.delete(this.constants.API_RECIPES + '/' + recipeId);
+  }
 }

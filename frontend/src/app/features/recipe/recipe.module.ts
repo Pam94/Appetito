@@ -5,6 +5,7 @@ import { RecipeRoutingModule } from './recipe-routing.module';
 
 import { RecipesComponent } from './components/recipes/recipes.component';
 import { RecipeComponent } from './components/recipe/recipe.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -14,6 +15,8 @@ import { RecipeComponent } from './components/recipe/recipe.component';
   ],
   imports: [
     CommonModule,
+    SharedModule,
+
     RecipeRoutingModule
   ]
 })

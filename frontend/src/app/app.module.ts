@@ -8,7 +8,6 @@ import { PlanningModule } from './features/planning/planning.module';
 import { RecipeModule } from './features/recipe/recipe.module';
 import { ShoplistModule } from './features/shoplist/shoplist.module';
 import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
@@ -18,7 +17,6 @@ import { SharedModule } from './shared/shared.module';
   imports: [
     BrowserModule,
     CoreModule,
-    SharedModule,
     PlanningModule,
     RecipeModule,
     ShoplistModule,

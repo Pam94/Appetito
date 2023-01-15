@@ -204,8 +204,8 @@ class RecipeController extends Controller
     {
         if ($recipe->delete()) {
 
-            $this->storageService->removeImage($recipe->image);
-            $this->storageService->removeThumbnail($recipe->image);
+            $this->storageService->removeImage($recipe->image_name);
+            $this->storageService->removeThumbnail($recipe->image_name);
 
             return response()->json([
                 'message' => 'Recipe deleted successfully'
