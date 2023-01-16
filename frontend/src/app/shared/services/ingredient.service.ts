@@ -30,10 +30,10 @@ export class IngredientService {
   }
 
   removeFromShoplist(ingredient: Ingredient): Observable<any> {
-    return this.apiHttpService.put(this.constants.API_INGREDIENTS + ingredient.id, ingredient);
+    return this.apiHttpService.put(this.constants.API_INGREDIENTS + '/' + ingredient.id, ingredient);
   }
 
   markIngredientInPantry(ingredient: Ingredient): Observable<any> {
-    return this.apiHttpService.put(this.constants.API_INGREDIENTS + ingredient.id, ingredient);
+    return this.apiHttpService.put(this.constants.API_INGREDIENTS + '/' + ingredient.id, ingredient);
   }
 }

@@ -33,11 +33,24 @@ export class ShoplistComponent {
   }
 
   check(ingredient: Ingredient) {
-    this.ingredientService.markIngredientInPantry(ingredient);
+
+    ingredient.pantry = true;
+    ingredient.shoplist = false;
+
+    this.ingredientService.markIngredientInPantry(ingredient)
+      .pipe(catchError(this.handleError))
+      .subscribe();
+
+    this.reloadIngredients();
   }
 
   removefromList(ingredient: Ingredient) {
-    this.ingredientService.removeFromShoplist(ingredient);
+    ingredient.shoplist = false;
+
+    this.ingredientService.removeFromShoplist(ingredient)
+      .pipe(catchError(this.handleError))
+      .subscribe();
+    this.reloadIngredients();
   }
 
   private handleError(error: HttpErrorResponse) {

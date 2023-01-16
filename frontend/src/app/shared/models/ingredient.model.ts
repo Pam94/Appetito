@@ -10,6 +10,7 @@ export interface Ingredient {
     name: string;
     pantry: boolean;
     shoplist: boolean;
+    ingredient_category_id: number;
 }
 
 export interface NewIngredient {
