@@ -13,7 +13,6 @@ import { RecipeService } from 'src/app/shared/services/recipe.service';
 export class RecipesComponent {
   recipes!: Recipe[];
   imagePath: string = this.constants.API_THUMBNAILS_STORAGE;
-  categories!: RecipeCategory[];
 
   constructor(
     private constants: Constants,

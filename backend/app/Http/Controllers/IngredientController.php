@@ -23,6 +23,13 @@ class IngredientController extends Controller
         return IngredientResource::collection(Ingredient::where('user_id', $autenticatedUserId)->paginate());
     }
 
+    public function getShoplist()
+    {
+        $autenticatedUserId = Auth::guard('sanctum')->id();
+
+        return IngredientResource::collection(Ingredient::where('user_id', $autenticatedUserId)->where('shoplist', 1)->paginate());
+    }
+
     /**
      * Store a newly created resource in storage.
      *

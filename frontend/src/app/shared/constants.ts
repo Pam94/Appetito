@@ -17,6 +17,8 @@ export class Constants {
 
     public readonly API_INGREDIENTS: string = this.API_ENDPOINT_VERSION + 'ingredients';
 
+    public readonly API_INGREDIENTS_SHOPLIST: string = this.API_ENDPOINT_VERSION + 'ingredientsShoplist';
+
     public readonly API_INGREDIENT_CATEGORIES: string = this.API_ENDPOINT_VERSION + 'ingredientCategories';
 
     public readonly API_UPLOAD_IMAGE: string = this.API_ENDPOINT_VERSION + 'uploadImage';

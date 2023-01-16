@@ -51,7 +51,7 @@ export class PlanRecipeComponent {
       .subscribe();
 
     this.loadRecipes();
-    this.planningsComponent
+    this.planningsComponent.reloadPlannings(this.date?.value);
   }
 
   cancelPlanning() {

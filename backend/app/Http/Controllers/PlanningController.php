@@ -7,11 +7,16 @@ use App\Http\Requests\UpdatePlanningRecipe;
 use App\Http\Resources\PlanningResource;
 use App\Models\Planning;
 use App\Models\PlanningRecipe;
+use App\Services\PlanningService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class PlanningController extends Controller
 {
+
+    public function __construct(private PlanningService $planningService)
+    {
+    }
     /**
      * Display a listing of the resource.
      *
@@ -76,6 +81,8 @@ class PlanningController extends Controller
                             'message' => "Planning Recipe not created"
                         ], 401);
                     }
+
+                    $this->planningService->checkIngredients($request->recipe_id);
                 }
 
                 return response()->json([

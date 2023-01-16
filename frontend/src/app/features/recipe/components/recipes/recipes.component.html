@@ -4,19 +4,6 @@
 
             <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Recetario</p>
 
-            <div class="row">
-                <a *ngFor="let category of categories" class="animate__animated animate__bounce animate__fadeIn">
-                    <div class="col">
-                        <div class="card text-bg-dark">
-                            <img src="{{imagePath}}{{category.icon_name}}" class="card-img">
-                            <div class="card-img-overlay">
-                                <h5 class="card-title">{{category.name}}</h5>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
             <div class="row row-cols-1 row-cols-md-2 g-4">
                 <a *ngFor="let recipe of recipes" class="animate__animated animate__bounce animate__fadeIn">
                     <div class="col">

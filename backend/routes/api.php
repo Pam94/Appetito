@@ -66,6 +66,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('v1/uploadImage', [StorageController::class, 'uploadImage']);
     Route::post('v1/updateImage', [StorageController::class, 'updateImage']);
+
+    Route::get('v1/ingredientsShoplist', [IngredientV1::class, 'getShoplist']);
 });
 
 Route::post('register', [Auth::class, 'register']);
