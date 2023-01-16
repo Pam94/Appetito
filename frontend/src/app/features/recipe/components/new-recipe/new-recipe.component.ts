@@ -1,9 +1,9 @@
-import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { catchError, EMPTY, forkJoin } from 'rxjs';
+import { catchError, EMPTY, forkJoin, Observable } from 'rxjs';
 import { Ingredient, IngredientCategory } from 'src/app/shared/models/ingredient.model';
-import { NewRecipeCategory, NewRecipeIngredient, RecipeCategory } from 'src/app/shared/models/recipe.model';
+import { NewRecipe, NewRecipeCategory, NewRecipeIngredient, RecipeCategory } from 'src/app/shared/models/recipe.model';
 import { IngredientService } from 'src/app/shared/services/ingredient.service';
 import { RecipeService } from 'src/app/shared/services/recipe.service';
 import { CategoryService } from '../../services/category.service';
@@ -25,6 +25,8 @@ export class NewRecipeComponent {
   ingredientCategories!: IngredientCategory[];
 
   imageHashName!: string;
+
+  recipe!: NewRecipe;
 
   constructor(
     private fb: FormBuilder,
@@ -132,6 +134,9 @@ export class NewRecipeComponent {
 
   createRecipe() {
 
+    var tasksToBackend = [];
+    var newIngredientsCount = 0;
+
     var recipeIngredients: NewRecipeIngredient[] = [];
 
     for (var newIngredient of this.newIngredientsArray.controls) {
@@ -145,20 +150,8 @@ export class NewRecipeComponent {
         shoplist: false
       }
 
-      this.ingredientService.createIngredient(ingredient)
-        .pipe(catchError(this.handleError))
-        .subscribe({
-          next: (data) => {
-            ingredientId = data.id;
-          }
-        });
-
-      if (ingredientId > 0) {
-        recipeIngredients.push({
-          id: ingredientId,
-          grams: newIngredient.get('gramsCreate')?.value,
-        })
-      }
+      tasksToBackend.push(this.ingredientService.createIngredient(ingredient));
+      newIngredientsCount = newIngredientsCount + 1;
     }
 
     for (var newIngredient of this.ingredientsArray.controls) {
@@ -178,20 +171,35 @@ export class NewRecipeComponent {
       });
     }
 
-    var recipe = {
+    this.recipe = {
       'name': this.name?.value,
       'time': this.time?.value,
       'portions': this.portions?.value,
       'instructions': this.instructions?.value,
-      'favorite': this.favorite?.value,
+      'favorite': this.favorite?.value ? false : true,
       'image': this.imageHashName,
       'categories': selectedCategories,
       'ingredients': recipeIngredients
     }
 
-    this.recipeService.createRecipe(recipe)
+    tasksToBackend.push(this.recipeService.createRecipe(this.recipeObject));
+
+    forkJoin([...tasksToBackend])
       .pipe(catchError(this.handleError))
-      .subscribe();
+      .subscribe({
+        next: (data) => {
+          for (let index = 0; index < newIngredientsCount; index++) {
+            const ingredientId = data[index].data.id;
+
+            if (ingredientId > 0) {
+              this.recipe.ingredients.push({
+                id: ingredientId,
+                grams: 10//newIngredient.get('gramsCreate')?.value,//TODO como accedo a esto??
+              });
+            }
+          }
+        }
+      });
 
     this.recipesComponent.reloadRecipes();
   }
@@ -212,5 +220,7 @@ export class NewRecipeComponent {
 
     return EMPTY;
   }
+
+  get recipeObject() { return this.recipe; }
 
 }

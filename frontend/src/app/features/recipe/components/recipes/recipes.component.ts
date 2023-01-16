@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { catchError, EMPTY } from 'rxjs';
 import { Constants } from 'src/app/shared/constants';
-import { Recipe, RecipeCategory } from 'src/app/shared/models/recipe.model';
+import { Recipe } from 'src/app/shared/models/recipe.model';
 import { RecipeService } from 'src/app/shared/services/recipe.service';
 
 @Component({

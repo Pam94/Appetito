@@ -23,7 +23,6 @@ export class RecipeService {
   }
 
   deleteRecipe(recipeId: number): Observable<any> {
-    console.log('DELETE')
     return this.apiHttpService.delete(this.constants.API_RECIPES + '/' + recipeId);
   }
 
