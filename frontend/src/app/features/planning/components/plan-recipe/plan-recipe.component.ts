@@ -6,6 +6,7 @@ import { catchError, EMPTY } from 'rxjs';
 import { Recipe } from 'src/app/shared/models/recipe.model';
 import { RecipeService } from 'src/app/shared/services/recipe.service';
 import { PlanningService } from '../../services/planning.service';
+import { PlanningComponent } from '../planning/planning.component';
 
 @Component({
   selector: 'app-plan-recipe',
@@ -20,7 +21,8 @@ export class PlanRecipeComponent {
   constructor(
     private fb: FormBuilder,
     private recipeService: RecipeService,
-    private planningService: PlanningService) {
+    private planningService: PlanningService,
+    private planningsComponent: PlanningComponent) {
 
     this.loadRecipes();
 
@@ -49,6 +51,7 @@ export class PlanRecipeComponent {
       .subscribe();
 
     this.loadRecipes();
+    this.planningsComponent
   }
 
   cancelPlanning() {

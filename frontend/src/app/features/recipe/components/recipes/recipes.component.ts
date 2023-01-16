@@ -19,13 +19,7 @@ export class RecipesComponent {
     private constants: Constants,
     private recipeService: RecipeService) {
 
-    this.recipeService.getRecipes()
-      .pipe(catchError(this.handleError))
-      .subscribe({
-        next: (data) => {
-          this.recipes = data.data;
-        }
-      });
+    this.reloadRecipes();
   }
 
   deleteRecipe(recipe: Recipe) {
@@ -33,6 +27,10 @@ export class RecipesComponent {
       .pipe(catchError(this.handleError))
       .subscribe();
 
+    this.reloadRecipes();
+  }
+
+  reloadRecipes() {
     this.recipeService.getRecipes()
       .pipe(catchError(this.handleError))
       .subscribe({

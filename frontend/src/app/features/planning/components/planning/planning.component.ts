@@ -25,13 +25,7 @@ export class PlanningComponent {
     var today = formatDate(this.date, 'yyyy-MM-dd', 'en');
 
     this.dateString = today;
-    this.planningService.getPlanningByDate(today)
-      .pipe(catchError(this.handleError))
-      .subscribe({
-        next: (data) => {
-          this.recipes = data.data.recipes;
-        }
-      });
+    this.reloadPlannings(today);
   }
 
   nextDay() {
@@ -43,13 +37,7 @@ export class PlanningComponent {
 
     this.recipes = [];
 
-    this.planningService.getPlanningByDate(nextDay)
-      .pipe(catchError(this.handleError))
-      .subscribe({
-        next: (data) => {
-          this.recipes = data.data.recipes;
-        }
-      });
+    this.reloadPlannings(nextDay);
   }
 
   previousDay() {
@@ -61,13 +49,7 @@ export class PlanningComponent {
 
     this.recipes = [];
 
-    this.planningService.getPlanningByDate(previousDay)
-      .pipe(catchError(this.handleError))
-      .subscribe({
-        next: (data) => {
-          this.recipes = data.data.recipes;
-        }
-      });
+    this.reloadPlannings(previousDay);
   }
 
   deleteRecipeFromPlan(recipe: PlanningRecipe) {
@@ -81,7 +63,12 @@ export class PlanningComponent {
       .pipe(catchError(this.handleError))
       .subscribe();
 
-    this.planningService.getPlanningByDate(planningDate)
+    this.reloadPlannings(planningDate);
+  }
+
+  reloadPlannings(date: string) {
+
+    this.planningService.getPlanningByDate(date)
       .pipe(catchError(this.handleError))
       .subscribe({
         next: (data) => {

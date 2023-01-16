@@ -8,6 +8,7 @@ import { IngredientService } from 'src/app/shared/services/ingredient.service';
 import { RecipeService } from 'src/app/shared/services/recipe.service';
 import { CategoryService } from '../../services/category.service';
 import { ImageService } from '../../services/image.service';
+import { RecipesComponent } from '../recipes/recipes.component';
 
 @Component({
   selector: 'app-new-recipe',
@@ -30,7 +31,8 @@ export class NewRecipeComponent {
     private recipeService: RecipeService,
     private categoryService: CategoryService,
     private ingredientService: IngredientService,
-    private imageService: ImageService) {
+    private imageService: ImageService,
+    private recipesComponent: RecipesComponent) {
 
     this.categoryService.getCategories()
       .pipe(catchError(this.handleError))
@@ -176,8 +178,6 @@ export class NewRecipeComponent {
       });
     }
 
-    console.log(this.imageHashName);
-
     var recipe = {
       'name': this.name?.value,
       'time': this.time?.value,
@@ -192,6 +192,8 @@ export class NewRecipeComponent {
     this.recipeService.createRecipe(recipe)
       .pipe(catchError(this.handleError))
       .subscribe();
+
+    this.recipesComponent.reloadRecipes();
   }
 
   cancel() {

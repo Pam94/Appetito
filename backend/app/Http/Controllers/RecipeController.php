@@ -72,8 +72,8 @@ class RecipeController extends Controller
             }
             $recipeId = $recipe->id;
 
-            $this->updateIngredientsRecipe($recipeId, $request->ingredients);
-            $this->updateCategoriesRecipe($recipeId, $request->categories);
+            $this->createIngredientsRecipe($recipeId, $request->ingredients);
+            $this->createCategoriesRecipe($recipeId, $request->categories);
 
             return response()->json([
                 'message' => 'Recipe Created Successfully'
@@ -129,6 +129,9 @@ class RecipeController extends Controller
                 ], 401);
             }
 
+            $this->updateIngredientsRecipe($recipe->id, $request->ingredients);
+            $this->updateCategoriesRecipe($recipe->id, $request->categories);
+
             return response()->json([
                 'message' => 'Recipe Updated Successfully',
                 'data' => $recipe
@@ -168,39 +171,80 @@ class RecipeController extends Controller
         ], 404);
     }
 
+    public function createCategoriesRecipe($recipeId, $categories)
+    {
+
+        if ($categories) {
+
+            foreach ($categories as $category) {
+
+                if (!CategoryRecipe::create([
+                    'recipe_id' => $recipeId,
+                    'category_id' => $category['id']
+                ])) {
+                    return response()->json([
+                        'message' => "Recipe Category not created"
+                    ], 401);
+                }
+            }
+        }
+    }
+
     public function updateCategoriesRecipe($recipeId, $categories)
     {
 
-        $this->destroyCategoriesRecipe($recipeId);
+        if ($categories) {
+            $this->destroyCategoriesRecipe($recipeId);
 
-        foreach ($categories as $category) {
+            foreach ($categories as $category) {
 
-            if (!CategoryRecipe::create([
-                'recipe_id' => $recipeId,
-                'category_id' => $category['id']
-            ])) {
-                return response()->json([
-                    'message' => "Recipe Category not created"
-                ], 401);
+                if (!CategoryRecipe::create([
+                    'recipe_id' => $recipeId,
+                    'category_id' => $category['id']
+                ])) {
+                    return response()->json([
+                        'message' => "Recipe Category not created"
+                    ], 401);
+                }
+            }
+        }
+    }
+
+    public function createIngredientsRecipe($recipeId, $ingredients)
+    {
+        if ($ingredients) {
+
+            foreach ($ingredients as $ingredient) {
+
+                if (!IngredientRecipe::create([
+                    'recipe_id' => $recipeId,
+                    'ingredient_id' => $ingredient['id'],
+                    'grams' => $ingredient['grams']
+                ])) {
+                    return response()->json([
+                        'message' => "Recipe Ingredient not created"
+                    ], 401);
+                }
             }
         }
     }
 
     public function updateIngredientsRecipe($recipeId, $ingredients)
     {
+        if ($ingredients) {
+            $this->destroyIngredientsRecipe($recipeId);
 
-        $this->destroyIngredientsRecipe($recipeId);
+            foreach ($ingredients as $ingredient) {
 
-        foreach ($ingredients as $ingredient) {
-
-            if (!IngredientRecipe::create([
-                'recipe_id' => $recipeId,
-                'ingredient_id' => $ingredient['id'],
-                'grams' => $ingredient['grams']
-            ])) {
-                return response()->json([
-                    'message' => "Recipe Ingredient not created"
-                ], 401);
+                if (!IngredientRecipe::create([
+                    'recipe_id' => $recipeId,
+                    'ingredient_id' => $ingredient['id'],
+                    'grams' => $ingredient['grams']
+                ])) {
+                    return response()->json([
+                        'message' => "Recipe Ingredient not created"
+                    ], 401);
+                }
             }
         }
     }
