@@ -1,10 +1,13 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { catchError, EMPTY } from 'rxjs'; import { Ingredient, IngredientCategory } from 'src/app/shared/models/ingredient.model';
-import { RecipeCategory } from 'src/app/shared/models/recipe.model';
+import { catchError, EMPTY, forkJoin } from 'rxjs';
+import { Ingredient, IngredientCategory } from 'src/app/shared/models/ingredient.model';
+import { NewRecipeCategory, NewRecipeIngredient, RecipeCategory } from 'src/app/shared/models/recipe.model';
+import { IngredientService } from 'src/app/shared/services/ingredient.service';
 import { RecipeService } from 'src/app/shared/services/recipe.service';
 import { CategoryService } from '../../services/category.service';
+import { ImageService } from '../../services/image.service';
 
 @Component({
   selector: 'app-new-recipe',
@@ -13,15 +16,21 @@ import { CategoryService } from '../../services/category.service';
 })
 export class NewRecipeComponent {
   recipeForm!: FormGroup;
+
   categories!: RecipeCategory[];
-  selectedCategories!: RecipeCategory[];
+
   ingredients!: Ingredient[];
+
   ingredientCategories!: IngredientCategory[];
+
+  imageHashName!: string;
 
   constructor(
     private fb: FormBuilder,
     private recipeService: RecipeService,
-    private categoryService: CategoryService) {
+    private categoryService: CategoryService,
+    private ingredientService: IngredientService,
+    private imageService: ImageService) {
 
     this.categoryService.getCategories()
       .pipe(catchError(this.handleError))
@@ -31,14 +40,29 @@ export class NewRecipeComponent {
         }
       });
 
+    this.ingredientService.getIngredientCategories()
+      .pipe(catchError(this.handleError))
+      .subscribe({
+        next: (data) => {
+          this.ingredientCategories = data.data;
+        }
+      });
+
+    this.ingredientService.getIngredients()
+      .pipe(catchError(this.handleError))
+      .subscribe({
+        next: (data) => {
+          this.ingredients = data.data;
+        }
+      });
+
     this.recipeForm = this.fb.group({
       name: ['', Validators.required],
       time: ['', Validators.required],
       portions: ['', Validators.required],
       instructions: ['', Validators.required],
       favorite: [false],
-      url: [''],
-      image: [null],
+      image: [null, Validators.required],
       categorySelector: [null, Validators.required],
       ingredientsArray: this.fb.array([]),
       newIngredientsArray: this.fb.array([])
@@ -50,7 +74,6 @@ export class NewRecipeComponent {
   get portions() { return this.recipeForm.get('portions'); }
   get instructions() { return this.recipeForm.get('instructions'); }
   get favorite() { return this.recipeForm.get('favorite'); }
-  get url() { return this.recipeForm.get('url'); }
   get image() { return this.recipeForm.get('image'); }
   get categorySelector() { return this.recipeForm.get('categorySelector'); }
   get ingredientsArray() { return <FormArray>this.recipeForm.get('ingredientsArray'); }
@@ -87,13 +110,73 @@ export class NewRecipeComponent {
     this.newIngredientsArray.removeAt(index);
   }
 
+  uploadImage(event: Event) {
+    const file = (event.target as HTMLInputElement)?.files?.[0];
+    this.recipeForm.patchValue({
+      image: file
+    });
+
+    const formData: any = new FormData();
+    formData.append("image", this.image?.value);
+
+    this.imageService.uploadImage(formData)
+      .pipe(catchError(this.handleError))
+      .subscribe({
+        next: (data) => {
+          this.imageHashName = data.data;
+        }
+      });
+  }
+
   createRecipe() {
 
-    /*for (var ingredient of this.ingredientsArray.controls){
-      this.ingredients.push({
+    var recipeIngredients: NewRecipeIngredient[] = [];
 
-      })
-    }*/
+    for (var newIngredient of this.newIngredientsArray.controls) {
+
+      var ingredientId: number = 0;
+
+      var ingredient = {
+        name: newIngredient.get('ingredientName')?.value,
+        ingredient_category_id: newIngredient.get('ingredientCategory')?.value,
+        pantry: false,
+        shoplist: false
+      }
+
+      this.ingredientService.createIngredient(ingredient)
+        .pipe(catchError(this.handleError))
+        .subscribe({
+          next: (data) => {
+            ingredientId = data.id;
+          }
+        });
+
+      if (ingredientId > 0) {
+        recipeIngredients.push({
+          id: ingredientId,
+          grams: newIngredient.get('gramsCreate')?.value,
+        })
+      }
+    }
+
+    for (var newIngredient of this.ingredientsArray.controls) {
+      var selectedIngredient = {
+        id: newIngredient.get('ingredientSelector')?.value,
+        grams: newIngredient.get('gramsSelect')?.value
+      }
+      recipeIngredients.push(selectedIngredient);
+
+    }
+
+    var selectedCategories: NewRecipeCategory[] = [];
+
+    for (var category of this.categorySelector?.value) {
+      selectedCategories.push({
+        id: category
+      });
+    }
+
+    console.log(this.imageHashName);
 
     var recipe = {
       'name': this.name?.value,
@@ -101,15 +184,20 @@ export class NewRecipeComponent {
       'portions': this.portions?.value,
       'instructions': this.instructions?.value,
       'favorite': this.favorite?.value,
-      'url': this.url?.value,
-      'image': this.image?.value,
-      'categories': this.selectedCategories,
-      //'ingredients': 
+      'image': this.imageHashName,
+      'categories': selectedCategories,
+      'ingredients': recipeIngredients
     }
 
-    /*this.recipeService.createRecipe(recipe)
+    this.recipeService.createRecipe(recipe)
       .pipe(catchError(this.handleError))
-      .subscribe();*/
+      .subscribe();
+  }
+
+  cancel() {
+    this.recipeForm.reset();
+    this.ingredientsArray.clear();
+    this.newIngredientsArray.clear();
   }
 
   private handleError(error: HttpErrorResponse) {

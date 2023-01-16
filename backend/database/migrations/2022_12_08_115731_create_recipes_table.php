@@ -21,7 +21,7 @@ return new class extends Migration
             $table->longText('instructions');
             $table->boolean('favorite');
             $table->string('url')->nullable();
-            $table->string('image_name')->nullable();
+            $table->string('image')->nullable();
             $table->foreignId('user_id');
             $table->timestamps();
         });

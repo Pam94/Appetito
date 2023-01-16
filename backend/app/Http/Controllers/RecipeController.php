@@ -10,6 +10,7 @@ use App\Http\Requests\NewRecipeRequest;
 use App\Http\Requests\UpdateRecipeRequest;
 use App\Models\CategoryRecipe;
 use App\Models\IngredientRecipe;
+use App\Models\PlanningRecipe;
 use App\Services\StorageService;
 
 class RecipeController extends Controller
@@ -52,20 +53,6 @@ class RecipeController extends Controller
                 ], 401);
             }
 
-            $imageHashName = '';
-
-            if ($request->hasFile('image')) {
-
-                $request->validate([
-                    'image' => 'mimes::jpeg,jpg,png'
-                ]);
-
-                $imageFile = $request->file('image');
-                $imageHashName = $imageFile->hashName();
-
-                $this->storageService->saveImage($imageFile, $imageHashName);
-            }
-
             $recipe = Recipe::create([
                 'name' => $request->name,
                 'time' => $request->time,
@@ -73,7 +60,7 @@ class RecipeController extends Controller
                 'instructions' => $request->instructions,
                 'favorite' => $request->favorite ? $request->favorite : false,
                 'url' => $request->url,
-                'image' => $imageHashName,
+                'image' => $request->image,
                 'user_id' => $autenticatedUserId
             ]);
 
@@ -85,30 +72,8 @@ class RecipeController extends Controller
             }
             $recipeId = $recipe->id;
 
-            foreach ($request->ingredients as $ingredient) {
-
-                if (!IngredientRecipe::create([
-                    'recipe_id' => $recipeId,
-                    'ingredient_id' => $ingredient['id'],
-                    'grams' => $ingredient['grams']
-                ])) {
-                    return response()->json([
-                        'message' => "Recipe Ingredient not created"
-                    ], 401);
-                }
-            }
-
-            foreach ($request->categories as $category) {
-
-                if (!CategoryRecipe::create([
-                    'recipe_id' => $recipeId,
-                    'category_id' => $category['id']
-                ])) {
-                    return response()->json([
-                        'message' => "Recipe Category not created"
-                    ], 401);
-                }
-            }
+            $this->updateIngredientsRecipe($recipeId, $request->ingredients);
+            $this->updateCategoriesRecipe($recipeId, $request->categories);
 
             return response()->json([
                 'message' => 'Recipe Created Successfully'
@@ -156,24 +121,6 @@ class RecipeController extends Controller
                 ], 401);
             }
 
-            if ($request->hasFile('image')) {
-
-                $request->validate([
-                    'image' => 'mimes::jpeg,jpg,png'
-                ]);
-
-                if ($recipe->image !== null) {
-                    $this->storageService->removeImage($recipe->image);
-                }
-
-                $imageFile = $request->file('image');
-                $imageHashName = $imageFile->hashName();
-                $this->storageService->saveImage($imageFile, $imageHashName);
-
-                $request->request->remove('image');
-                $request->request->add(['image_name' => $imageHashName]);
-            }
-
             if (!$recipe->update($request->all())) {
 
                 return response()->json([
@@ -204,8 +151,12 @@ class RecipeController extends Controller
     {
         if ($recipe->delete()) {
 
-            $this->storageService->removeImage($recipe->image_name);
-            $this->storageService->removeThumbnail($recipe->image_name);
+            $this->storageService->removeImage($recipe->image);
+            $this->storageService->removeThumbnail($recipe->image);
+
+            $this->destroyCategoriesRecipe($recipe->id);
+            $this->destroyIngredientsRecipe($recipe->id);
+            $this->destroyPlanningsRecipe($recipe->id);
 
             return response()->json([
                 'message' => 'Recipe deleted successfully'
@@ -215,5 +166,66 @@ class RecipeController extends Controller
         return response()->json([
             'message' => 'Recipe not found'
         ], 404);
+    }
+
+    public function updateCategoriesRecipe($recipeId, $categories)
+    {
+
+        $this->destroyCategoriesRecipe($recipeId);
+
+        foreach ($categories as $category) {
+
+            if (!CategoryRecipe::create([
+                'recipe_id' => $recipeId,
+                'category_id' => $category['id']
+            ])) {
+                return response()->json([
+                    'message' => "Recipe Category not created"
+                ], 401);
+            }
+        }
+    }
+
+    public function updateIngredientsRecipe($recipeId, $ingredients)
+    {
+
+        $this->destroyIngredientsRecipe($recipeId);
+
+        foreach ($ingredients as $ingredient) {
+
+            if (!IngredientRecipe::create([
+                'recipe_id' => $recipeId,
+                'ingredient_id' => $ingredient['id'],
+                'grams' => $ingredient['grams']
+            ])) {
+                return response()->json([
+                    'message' => "Recipe Ingredient not created"
+                ], 401);
+            }
+        }
+    }
+
+    public function destroyCategoriesRecipe($recipeId)
+    {
+        $categoriesRecipe = CategoryRecipe::where('recipe_id', $recipeId);
+        foreach ($categoriesRecipe as $categoryRecipe) {
+            CategoryRecipe::destroy($categoryRecipe->id);
+        }
+    }
+
+    public function destroyIngredientsRecipe($recipeId)
+    {
+        $ingredientsRecipe = IngredientRecipe::where('recipe_id', $recipeId);
+        foreach ($ingredientsRecipe as $ingredientRecipe) {
+            IngredientRecipe::destroy($ingredientRecipe->id);
+        }
+    }
+
+    public function destroyPlanningsRecipe($recipeId)
+    {
+        $planningsRecipe = PlanningRecipe::where('recipe_id', $recipeId);
+        foreach ($planningsRecipe as $planningRecipe) {
+            PlanningRecipe::destroy($planningRecipe->id);
+        }
     }
 }

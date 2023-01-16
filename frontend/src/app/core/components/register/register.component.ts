@@ -25,7 +25,7 @@ export class RegisterComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       repeatPassword: ['', [Validators.required, Validators.minLength(8)]]
-    }, { validators: passwordValidator });
+    }, { validators: !passwordValidator });
   }
 
   register() {
@@ -33,7 +33,7 @@ export class RegisterComponent {
       .pipe(catchError(this.handleError))
       .subscribe(() => {
         this.registerForm.reset();
-        this.router.navigate(['login']);
+        this.router.navigate(['']);
       });
   }
 

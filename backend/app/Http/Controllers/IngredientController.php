@@ -48,7 +48,7 @@ class IngredientController extends Controller
                 ], 401);
             }
 
-            Ingredient::create([
+            $newIngredient = Ingredient::create([
                 'name' => $request->name,
                 'pantry' => $request->pantry ? $request->pantry : false,
                 'shoplist' => $request->shoplist ? $request->shoplist : false,
@@ -57,7 +57,8 @@ class IngredientController extends Controller
             ]);
 
             return response()->json([
-                'message' => 'Ingredient Created Successfully'
+                'message' => 'Ingredient Created Successfully',
+                'data' => $newIngredient
             ], 200);
         } catch (\Throwable $throwable) {
 

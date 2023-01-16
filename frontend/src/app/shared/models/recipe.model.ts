@@ -12,7 +12,7 @@ export interface PlanningRecipe {
   instructions: string;
   favorite: boolean;
   url: string;
-  image_name: string;
+  image: string;
   pivot: PlanningRecipePivot;
   user_id: number;
   updated_at: Date;
@@ -59,7 +59,7 @@ export interface Recipe {
   instructions: string;
   favorite: boolean;
   url: string;
-  image_name: string;
+  image: string;
   ingredients: RecipeIngredient[],
   categories: RecipeCategory[],
 }
@@ -69,14 +69,17 @@ export interface NewRecipeIngredient {
   grams: number;
 }
 
+export interface NewRecipeCategory {
+  id: number;
+}
+
 export interface NewRecipe {
   name: string;
   time: number;
   portions: number;
   instructions: string;
   favorite: boolean;
-  url: string;
-  image: File;
-  categories: RecipeCategory[],
+  image: string;
+  categories: NewRecipeCategory[],
   ingredients: NewRecipeIngredient[]
 }

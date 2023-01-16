@@ -13,6 +13,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  errors!: any[];
 
   constructor(
     private fb: FormBuilder,
@@ -41,11 +42,15 @@ export class LoginComponent {
   get password() { return this.loginForm.get('password'); }
 
   private handleError(error: HttpErrorResponse) {
+    var errorMessages = [];
+
     if (error.status === 0) {
       console.error('Client-side or network error ocurred', error.error);
     } else {
 
-      console.error('Backend returned code ${error.status}: ', error.error);
+      console.error('Backend returned code: ', error.status, error.error);
+      errorMessages.push(error.error.message);
+      this.errors = errorMessages;
     }
 
     return throwError(() => new Error('ERROR'));

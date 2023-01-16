@@ -15,7 +15,7 @@ class StorageService
 
         $imageThumbnail = ImageIntervention::make($imageFile->getRealPath());
 
-        $imageThumbnail->resize(300, 300, function ($constraint) {
+        $imageThumbnail->resize(200, 200, function ($constraint) {
             $constraint->aspectRatio();
         })->save(storage_path('app/private') . '/thumbnails/' . $imageHashName);
     }
@@ -24,7 +24,7 @@ class StorageService
     {
         $imageThumbnail = ImageIntervention::make($imageFile->getRealPath());
 
-        $imageThumbnail->resize(300, 300, function ($constraint) {
+        $imageThumbnail->resize(200, 200, function ($constraint) {
             $constraint->aspectRatio();
         })->save(storage_path('app/private') . '/thumbnails/' . $imageHashName);
     }

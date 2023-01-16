@@ -11,3 +11,10 @@ export interface Ingredient {
     pantry: boolean;
     shoplist: boolean;
 }
+
+export interface NewIngredient {
+    name: string;
+    pantry: boolean;
+    shoplist: boolean;
+    ingredient_category_id: number;
+}

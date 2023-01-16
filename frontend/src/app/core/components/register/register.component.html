@@ -100,7 +100,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="registerForm.hasError('samePasswords')"
+                <div *ngIf="password && (password.dirty || password.touched) && repeatPassword && (repeatPassword.dirty || repeatPassword.touched) && registerForm.hasError('notSamePasswords')"
                     class="cross-validation-error-message alert alert-danger">
                     Las contraseñas no coinciden
                 </div>

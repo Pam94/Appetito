@@ -1,9 +1,8 @@
 
-import { formatDate } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { catchError, EMPTY, throwError } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { catchError, EMPTY } from 'rxjs';
 import { Recipe } from 'src/app/shared/models/recipe.model';
 import { RecipeService } from 'src/app/shared/services/recipe.service';
 import { PlanningService } from '../../services/planning.service';
@@ -56,7 +55,6 @@ export class PlanRecipeComponent {
     this.planningForm.reset();
 
     this.loadRecipes();
-
   }
 
   loadRecipes() {

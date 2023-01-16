@@ -6,7 +6,7 @@ export interface CategoryRecipe {
     instructions: string;
     favorite: boolean;
     url: string;
-    image_name: string;
+    image: string;
 }
 
 

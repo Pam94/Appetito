@@ -10,6 +10,7 @@ use App\Http\Controllers\IngredientCategoryController as IngredientCategoryV1;
 use App\Http\Controllers\CategoryController as CategoryV1;
 use App\Http\Controllers\RecipeController as RecipeV1;
 use App\Http\Controllers\PlanningController as PlanningV1;
+use App\Http\Controllers\StorageController;
 use App\Services\StorageService;
 
 /*
@@ -62,6 +63,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+
+    Route::post('v1/uploadImage', [StorageController::class, 'uploadImage']);
+    Route::post('v1/updateImage', [StorageController::class, 'updateImage']);
 });
 
 Route::post('register', [Auth::class, 'register']);

@@ -4,5 +4,5 @@ export const passwordValidator: ValidatorFn = (control: AbstractControl): Valida
   const password = control.get('password');
   const repeatPassword = control.get('repeatPassword');
 
-  return password && repeatPassword && password.value === repeatPassword.value ? { samePasswords: true } : null;
+  return password?.value === repeatPassword?.value ? { notSamePasswords: false } : { notSamePasswords: true };
 };
