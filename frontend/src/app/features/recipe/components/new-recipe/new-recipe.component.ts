@@ -194,7 +194,7 @@ export class NewRecipeComponent {
             if (ingredientId > 0) {
               this.recipe.ingredients.push({
                 id: ingredientId,
-                grams: 10//newIngredient.get('gramsCreate')?.value,//TODO como accedo a esto??
+                grams: newIngredient.get('gramsCreate')?.value
               });
             }
           }
