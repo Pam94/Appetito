@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 use App\Models\User;
+use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Facades\Session as FacadesSession;
 
 class AuthController extends Controller
 {
@@ -94,13 +96,13 @@ class AuthController extends Controller
         }
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
 
         Auth::logout();
+        FacadesSession::flush();
 
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
+        //$request->session()->invalidate();
+        //$request->session()->regenerateToken();
     }
 }

@@ -20,4 +20,12 @@ export class AuthService {
   login(user: UserLogin): Observable<any> {
     return this.apiHttpService.post(this.constants.API_LOGIN, user);
   }
+
+  profile(): Observable<any> {
+    return this.apiHttpService.get(this.constants.API_PROFILE);
+  }
+
+  logout(user: User): Observable<any> {
+    return this.apiHttpService.post(this.constants.API_LOGOUT, user);
+  }
 }

@@ -11,6 +11,7 @@ import { ApiHttpService } from './services/api-http.service';
 import { CoreRoutingModule } from './core-routing.module';
 
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   providers: [
@@ -26,6 +27,8 @@ import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
     HttpClientModule,
     ReactiveFormsModule,
 
+
+    SharedModule,
     MdbFormsModule,
 
     CoreRoutingModule

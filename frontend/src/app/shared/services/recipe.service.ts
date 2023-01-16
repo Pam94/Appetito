@@ -18,7 +18,12 @@ export class RecipeService {
     return this.apiHttpService.get(this.constants.API_RECIPES);
   }
 
+  getRecipe(recipeId: string): Observable<any> {
+    return this.apiHttpService.get(this.constants.API_RECIPES + '/' + recipeId);
+  }
+
   deleteRecipe(recipeId: number): Observable<any> {
+    console.log('DELETE')
     return this.apiHttpService.delete(this.constants.API_RECIPES + '/' + recipeId);
   }
 

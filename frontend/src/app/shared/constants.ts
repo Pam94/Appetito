@@ -5,6 +5,8 @@ export class Constants {
 
     public readonly API_REGISTER: string = this.API_ENDPOINT + 'register';
     public readonly API_LOGIN: string = this.API_ENDPOINT + 'login';
+    public readonly API_PROFILE: string = this.API_ENDPOINT + 'user';
+    public readonly API_LOGOUT: string = this.API_ENDPOINT + 'logout';
 
     public readonly API_IMAGES_STORAGE: string = this.API_ENDPOINT + 'images/';
     public readonly API_THUMBNAILS_STORAGE: string = this.API_ENDPOINT + 'thumbnails/';
