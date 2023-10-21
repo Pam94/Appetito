@@ -13,6 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
+        /**
+         * The records in the table are unequivocally identified by the unique
+         * pair of 'user_id' and 'date' so the id of the table
+         * it doesn't have to be an UUID
+         */
         Schema::create('plannings', function (Blueprint $table) {
             $table->id();
             $table->date('date');

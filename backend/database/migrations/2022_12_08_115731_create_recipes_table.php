@@ -14,13 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('recipes', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->uuid('id');
+            $table->string('name', 30);
             $table->tinyInteger('time');
             $table->tinyInteger('portions');
-            $table->longText('instructions');
+            $table->string('instructions');
             $table->boolean('favorite');
-            $table->string('url')->nullable();
+            $table->string('url', 50)->nullable();
             $table->string('image')->nullable();
             $table->foreignId('user_id');
             $table->timestamps();

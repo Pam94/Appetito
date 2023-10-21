@@ -13,11 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
+        /**
+         * The records in the table are unequivocally identified by the unique
+         * pair of 'recipe_id' and 'ingredient_id' so the id of the table
+         * it doesn't have to be an UUID
+         */
         Schema::create('ingredient_recipe', function (Blueprint $table) {
             $table->id();
             $table->foreignId('recipe_id');
             $table->foreignId('ingredient_id');
-            $table->integer('grams');
+            $table->tinyInteger('grams');
             $table->unique(['recipe_id', 'ingredient_id']);
             $table->timestamps();
         });
