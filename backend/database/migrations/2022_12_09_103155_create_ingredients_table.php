@@ -14,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('ingredients', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->string('name', 30);
             $table->boolean('pantry')->default(false);
             $table->boolean('shoplist')->default(false);
-            $table->foreignId('user_id');
-            $table->foreignId('ingredient_category_id');
+            $table->foreignUuid('user_id');
+            $table->foreignUuid('ingredient_category_id');
             $table->timestamps();
         });
     }

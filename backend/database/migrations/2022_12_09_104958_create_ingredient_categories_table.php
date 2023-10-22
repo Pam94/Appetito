@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('ingredient_categories', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->string('name', 30);
             $table->string('icon_name', 30)->nullable();
             $table->timestamps();

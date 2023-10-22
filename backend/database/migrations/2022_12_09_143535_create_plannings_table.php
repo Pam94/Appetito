@@ -21,7 +21,7 @@ return new class extends Migration
         Schema::create('plannings', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->foreignId('user_id');
+            $table->foreignUuid('user_id');
             $table->unique(['date', 'user_id']);
             $table->timestamps();
         });

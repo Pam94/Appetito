@@ -20,8 +20,8 @@ return new class extends Migration
          */
         Schema::create('category_recipe', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('recipe_id');
-            $table->foreignId('category_id');
+            $table->foreignUuid('recipe_id');
+            $table->foreignUuid('category_id');
             $table->unique(['recipe_id', 'category_id']);
             $table->timestamps();
         });

@@ -14,15 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('recipes', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->string('name', 30);
             $table->tinyInteger('time');
             $table->tinyInteger('portions');
             $table->string('instructions');
             $table->boolean('favorite');
-            $table->string('url', 50)->nullable();
+            $table->string('url', 200)->nullable();
             $table->string('image')->nullable();
-            $table->foreignId('user_id');
+            $table->foreignUuid('user_id');
             $table->timestamps();
         });
     }
