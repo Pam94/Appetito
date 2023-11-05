@@ -2,23 +2,21 @@
 
 namespace Database\Factories;
 
-use App\Models\IngredientCategory;
-use App\Models\Recipe;
+use App\Models\Planning;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory
- * <\App\Models\Recipe>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Planning>
  */
-class RecipeFactory extends Factory
+class PlanningFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      * 
      * @var string
      */
-    protected $model = Recipe::class;
+    protected $model = Planning::class;
 
     /**
      * Define the model's default state.
@@ -28,12 +26,7 @@ class RecipeFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->name(),
-            'time' => fake()->numberBetween(10, 60),
-            'portions' => fake()->numberBetween(1,4),
-            'instructions' => fake()->text(),
-            'favorite' => fake()->boolean(),
-            'url' => fake()->url(),
+            'date' => fake()->date('d-m-Y'),
             'user_id' => function () {
                 if ($user = User::inRandomOrder()->first()){
                     return $user->id;

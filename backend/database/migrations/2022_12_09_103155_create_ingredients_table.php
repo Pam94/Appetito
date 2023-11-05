@@ -18,8 +18,12 @@ return new class extends Migration
             $table->string('name', 30);
             $table->boolean('pantry')->default(false);
             $table->boolean('shoplist')->default(false);
-            $table->foreignUuid('user_id');
-            $table->foreignUuid('ingredient_category_id');
+            $table->foreignUuid('user_id')
+                  ->constrained('users', 'id')
+                  ->onUpdate('cascade');
+            $table->foreignUuid('ingredient_category_id')
+                  ->constrained('ingredient_categories', 'id')
+                  ->onUpdate('cascade');
             $table->timestamps();
         });
     }

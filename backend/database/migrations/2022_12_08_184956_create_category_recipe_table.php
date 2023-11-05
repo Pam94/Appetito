@@ -20,9 +20,13 @@ return new class extends Migration
          */
         Schema::create('category_recipe', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('recipe_id');
-            $table->foreignUuid('category_id');
-            $table->unique(['recipe_id', 'category_id']);
+            $table->foreignUuid('recipe_id')
+                  ->constrained('recipes', 'id')
+                  ->onUpdate('cascade');
+            $table->foreignUuid('category_id')
+                  ->constrained('categories', 'id')
+                  ->onUpdate('cascade');
+            $table->unique('recipe_id', 'category_id');
             $table->timestamps();
         });
     }

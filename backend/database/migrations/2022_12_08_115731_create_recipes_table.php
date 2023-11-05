@@ -20,9 +20,11 @@ return new class extends Migration
             $table->tinyInteger('portions');
             $table->string('instructions');
             $table->boolean('favorite');
-            $table->string('url', 200)->nullable();
+            $table->string('url')->nullable();
             $table->string('image')->nullable();
-            $table->foreignUuid('user_id');
+            $table->foreignUuid('user_id')
+                  ->constrained('users', 'id')
+                  ->onUpdate('cascade');
             $table->timestamps();
         });
     }

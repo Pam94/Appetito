@@ -20,10 +20,14 @@ return new class extends Migration
          */
         Schema::create('ingredient_recipe', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('recipe_id');
-            $table->foreignUuid('ingredient_id');
-            $table->tinyInteger('grams');
-            $table->unique(['recipe_id', 'ingredient_id']);
+            $table->foreignUuid('recipe_id')
+                  ->constrained('recipes', 'id')
+                  ->onUpdate('cascade');
+            $table->foreignUuid('ingredient_id')
+                  ->constrained('ingredients', 'id')
+                  ->onUpdate('cascade');
+            $table->tinyInteger('grams')->default(5);
+            $table->unique('recipe_id', 'ingredient_id');
             $table->timestamps();
         });
     }

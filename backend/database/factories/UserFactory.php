@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 
@@ -11,6 +12,13 @@ use Illuminate\Support\Facades\Hash;
  */
 class UserFactory extends Factory
 {
+    /**
+     * The name of the factory's corresponding model.
+     * 
+     * @var string
+     */
+    protected $model = User::class;
+    
     /**
      * Define the model's default state.
      *
@@ -22,7 +30,7 @@ class UserFactory extends Factory
 
         return [
             'name' => fake()->name(),
-            'surname' => fake()->name(),
+            'surname' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'simplePassword' => $password,
             'password' => Hash::make($password)
